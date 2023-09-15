@@ -2,10 +2,8 @@ package com.example.miniprojectdelivery.controller;
 
 import com.example.miniprojectdelivery.dto.MemuResponseDto;
 import com.example.miniprojectdelivery.dto.MenuRequestDto;
-import com.example.miniprojectdelivery.dto.MessageResponseDto;
 import com.example.miniprojectdelivery.service.MenuService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,4 +19,10 @@ public class MemuController {
     public MemuResponseDto createMenu(@RequestBody MenuRequestDto requestDto){
         return menuService.createMenu(requestDto);
     }
+
+    @GetMapping("/menus")
+    public List<MemuResponseDto> getMenus(){
+        return menuService.getMenus();
+    }
+
 }
