@@ -2,11 +2,14 @@ package com.example.miniprojectdelivery.service;
 
 import com.example.miniprojectdelivery.dto.MemuResponseDto;
 import com.example.miniprojectdelivery.dto.MenuRequestDto;
+import com.example.miniprojectdelivery.dto.MessageResponseDto;
 import com.example.miniprojectdelivery.model.Menu;
 import com.example.miniprojectdelivery.model.Restaurant;
 import com.example.miniprojectdelivery.repository.MenuRepository;
 import com.example.miniprojectdelivery.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -34,17 +37,22 @@ public class MenuService {
         Menu menu = findMenu(id);
         return new MemuResponseDto(menu);
     }
-
-    // 선택한 메뉴가 존재하는지 검사하는 메서드
-    private Menu findMenu(Long id) {
-        return menuRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("선택한 메뉴는 존재하지 않습니다."));
-    }
-
     @Transactional
     public MemuResponseDto update(Long id, MenuRequestDto requestDto) {
         Menu menu = findMenu(id);
         menu.update(requestDto);
         return new MemuResponseDto(menu);
     }
+    public ResponseEntity<MessageResponseDto> deleteMenu(Long id) {
+        Menu menu = findMenu(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponseDto("메뉴 삭제 성공!"));
+
+    }
+    // 선택한 메뉴가 존재하는지 검사하는 메서드
+    private Menu findMenu(Long id) {
+        return menuRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("선택한 메뉴는 존재하지 않습니다."));
+    }
+
+
 }
