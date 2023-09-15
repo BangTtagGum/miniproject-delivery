@@ -9,6 +9,7 @@ import com.example.miniprojectdelivery.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -38,5 +39,12 @@ public class MenuService {
     private Menu findMenu(Long id) {
         return menuRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("선택한 메뉴는 존재하지 않습니다."));
+    }
+
+    @Transactional
+    public MemuResponseDto update(Long id, MenuRequestDto requestDto) {
+        Menu menu = findMenu(id);
+        menu.update(requestDto);
+        return new MemuResponseDto(menu);
     }
 }

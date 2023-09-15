@@ -28,5 +28,8 @@ public class MemuController {
     public MemuResponseDto selectMenu(@PathVariable Long id){
         return menuService.selectMenu(id);
     }
-
+    @PutMapping("/menus/{id}")
+    public MemuResponseDto updateMenu(@PathVariable Long id, @RequestBody MenuRequestDto requestDto){
+        return menuService.update(id, requestDto);
+    }
 }
