@@ -28,4 +28,15 @@ public class MenuService {
         List<Menu> menuList = menuRepository.findAll();
         return menuList.stream().map(MemuResponseDto::new).toList();
     }
+
+    public MemuResponseDto selectMenu(Long id) {
+        Menu menu = findMenu(id);
+        return new MemuResponseDto(menu);
+    }
+
+    // 선택한 메뉴가 존재하는지 검사하는 메서드
+    private Menu findMenu(Long id) {
+        return menuRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("선택한 메뉴는 존재하지 않습니다."));
+    }
 }

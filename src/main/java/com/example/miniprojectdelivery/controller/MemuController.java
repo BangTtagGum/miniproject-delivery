@@ -24,5 +24,9 @@ public class MemuController {
     public List<MemuResponseDto> getMenus(){
         return menuService.getMenus();
     }
+    @GetMapping("/menus/{id}")
+    public MemuResponseDto selectMenu(@PathVariable Long id){
+        return menuService.selectMenu(id);
+    }
 
 }
