@@ -31,4 +31,5 @@ public class UserController {
     public void mailing(@RequestBody Mail email){
         userService.Mailing(email);
     }
+
 }
