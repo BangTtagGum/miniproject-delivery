@@ -1,14 +1,13 @@
 package com.example.miniprojectdelivery.controller;
 
-import com.example.miniprojectdelivery.dto.BaseResponse;
-import com.example.miniprojectdelivery.dto.ReviewCreateRequestDto;
-import com.example.miniprojectdelivery.dto.ReviewResponseDto;
-import com.example.miniprojectdelivery.dto.ReviewUpdateRequestDto;
+import com.example.miniprojectdelivery.dto.MessageResponseDto;
+import com.example.miniprojectdelivery.dto.review.ReviewCreateRequestDto;
+import com.example.miniprojectdelivery.dto.review.ReviewResponseDto;
+import com.example.miniprojectdelivery.dto.review.ReviewUpdateRequestDto;
 import com.example.miniprojectdelivery.service.ReviewService;
 import com.example.miniprojectdelivery.utill.security.UserDetailsImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,9 +39,9 @@ public class ReviewController {
     }
 
     @DeleteMapping("/{id}")
-    public BaseResponse deleteReview(@PathVariable Long id) {
+    public MessageResponseDto deleteReview(@PathVariable Long id) {
         String message = reviewService.deleteReview(id);
-        return new BaseResponse(HttpStatus.OK, message);
+        return new MessageResponseDto(message);
     }
 
 }

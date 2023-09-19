@@ -1,4 +1,4 @@
-package com.example.miniprojectdelivery.dto.menu;
+package com.example.miniprojectdelivery.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
