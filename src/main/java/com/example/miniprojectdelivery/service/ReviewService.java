@@ -1,9 +1,14 @@
 package com.example.miniprojectdelivery.service;
 
-import com.example.miniprojectdelivery.dto.ReviewRequestDto;
-import com.example.miniprojectdelivery.dto.ReviewResponseDto;
+import com.example.miniprojectdelivery.dto.review.ReviewCreateRequestDto;
+import com.example.miniprojectdelivery.dto.review.ReviewResponseDto;
+import com.example.miniprojectdelivery.dto.review.ReviewUpdateRequestDto;
+import com.example.miniprojectdelivery.model.Restaurant;
 import com.example.miniprojectdelivery.model.Review;
+import com.example.miniprojectdelivery.model.User;
+import com.example.miniprojectdelivery.repository.RestaurantRepository;
 import com.example.miniprojectdelivery.repository.ReviewRepository;
+import com.example.miniprojectdelivery.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,15 +21,11 @@ public class ReviewService {
     private final RestaurantRepository restaurantRepository;
     private final UserRepository userRepository;
 
-    public ReviewResponseDto createReview(Long restaurantId, ReviewRequestDto requestDto) {
+    public ReviewResponseDto createReview(User user, ReviewCreateRequestDto requestDto) {
+        Long restaurantId = requestDto.getRestaurantId();
         Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(
                 () -> {
                     throw new IllegalArgumentException("해당 ID의 음식점이 존재하지 않습니다.");
-                }
-        );
-        User user = userRepository.findById(1L).orElseThrow(
-                () -> {
-                    throw new IllegalArgumentException("해당 ID의 유저가 존재하지 않습니다.");
                 }
         );
 
@@ -35,12 +36,11 @@ public class ReviewService {
 
         reviewRepository.save(review);
 
-        ReviewResponseDto responseDto = new ReviewResponseDto(review);
-        return responseDto;
+        return new ReviewResponseDto(review);
     }
 
     @Transactional
-    public ReviewResponseDto updateReview(Long reviewId, ReviewRequestDto requestDto) {
+    public ReviewResponseDto updateReview(Long reviewId, ReviewUpdateRequestDto requestDto) {
         Review review = findReview(reviewId);
         review.updateContentAndStars(requestDto);
 
@@ -48,7 +48,6 @@ public class ReviewService {
         return responseDto;
     }
 
-    // todo: 임시로 String으로 반환 이후 페이지로 반환할 거 고민해 봐야 함
     public String  deleteReview(Long id) { // 임시로 String 으로 반환
         Review review = findReview(id);
         reviewRepository.delete(review);
