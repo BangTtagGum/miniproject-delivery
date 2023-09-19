@@ -1,4 +1,4 @@
-package com.example.miniprojectdelivery.dto;
+package com.example.miniprojectdelivery.dto.review;
 
 import com.example.miniprojectdelivery.model.Review;
 import java.time.LocalDateTime;
