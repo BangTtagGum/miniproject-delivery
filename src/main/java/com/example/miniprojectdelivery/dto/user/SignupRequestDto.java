@@ -1,4 +1,4 @@
-package com.example.miniprojectdelivery.dto;
+package com.example.miniprojectdelivery.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;

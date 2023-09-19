@@ -1,6 +1,6 @@
 package com.example.miniprojectdelivery.utill.jwt;
 
-import com.example.miniprojectdelivery.model.UserRoleEnum;
+import com.example.miniprojectdelivery.enums.UserRoleEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;

@@ -12,9 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
-@Table(name = "auth")
 public class Auth {
 
     @Id
@@ -27,7 +25,6 @@ public class Auth {
 
     @Column(name = "password", nullable = false)
     private int paswword;
-
 
     public Auth(String email, int password) {
         this.email = email;

@@ -1,13 +1,13 @@
 package com.example.miniprojectdelivery.model;
 
-import com.example.miniprojectdelivery.dto.ReviewCreateRequestDto;
-import com.example.miniprojectdelivery.dto.ReviewUpdateRequestDto;
+import com.example.miniprojectdelivery.dto.review.ReviewCreateRequestDto;
+import com.example.miniprojectdelivery.dto.review.ReviewUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
 @Getter
-public class Reviews extends TimeStamp{
+public class Review extends TimeStamp{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class Reviews extends TimeStamp{
     private String content;             // 리뷰 내용
 
     @Column(nullable = false)
-    private Integer star;               // 리뷰 평점
+    private int star;               // 리뷰 평점
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

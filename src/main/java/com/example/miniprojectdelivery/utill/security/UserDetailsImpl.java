@@ -1,7 +1,7 @@
 package com.example.miniprojectdelivery.utill.security;
 
 import com.example.miniprojectdelivery.model.User;
-import com.example.miniprojectdelivery.model.UserRoleEnum;
+import com.example.miniprojectdelivery.enums.UserRoleEnum;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

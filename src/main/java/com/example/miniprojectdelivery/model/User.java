@@ -1,17 +1,15 @@
 package com.example.miniprojectdelivery.model;
 
+import com.example.miniprojectdelivery.enums.UserRoleEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
-@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +35,6 @@ public class User {
     private Long point;
 
     public User(String username, String password, UserRoleEnum role, String email) {
-        System.out.println("hey");
         this.username = username;
         this.password = password;
         this.role = role;
