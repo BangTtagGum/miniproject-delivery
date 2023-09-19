@@ -7,12 +7,12 @@ import com.example.miniprojectdelivery.model.Menu;
 import com.example.miniprojectdelivery.model.Restaurant;
 import com.example.miniprojectdelivery.repository.MenuRepository;
 import com.example.miniprojectdelivery.repository.RestaurantRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service

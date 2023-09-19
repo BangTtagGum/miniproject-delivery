@@ -1,11 +1,10 @@
 package com.example.miniprojectdelivery.model;
 
 import com.example.miniprojectdelivery.dto.MenuRequestDto;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 @Entity
 @Getter
