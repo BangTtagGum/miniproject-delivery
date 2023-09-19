@@ -4,13 +4,20 @@ import com.example.miniprojectdelivery.dto.MessageResponseDto;
 import com.example.miniprojectdelivery.dto.RestaurantRequestDto;
 import com.example.miniprojectdelivery.dto.RestaurantResponseDto;
 import com.example.miniprojectdelivery.service.RestaurantService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/restaurants")
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
@@ -20,7 +27,7 @@ public class RestaurantController {
     }
 
     // 업장 생성
-    @PostMapping("/restaurant")
+    @PostMapping
     public RestaurantResponseDto restaurantCreate(
             @RequestBody RestaurantRequestDto restaurantRequestDto
     ) {
@@ -28,7 +35,7 @@ public class RestaurantController {
     }
 
     // 업장 수정
-    @PutMapping("/restaurant/{restaurantId}")
+    @PutMapping("/{restaurantId}")
     public RestaurantResponseDto restaurantUpdate(
             @PathVariable Long restaurantId,
             @RequestBody RestaurantRequestDto restaurantRequestDto
@@ -37,7 +44,7 @@ public class RestaurantController {
     }
 
     // 업장 삭제
-    @DeleteMapping("/restaurant/{restaurantId}")
+    @DeleteMapping("/{restaurantId}")
     public ResponseEntity<MessageResponseDto> restaurantDelete(
             @PathVariable Long restaurantId
     ) {
@@ -45,7 +52,7 @@ public class RestaurantController {
     }
 
     // 업장 상세 조회
-    @GetMapping("/restaurant/{restaurantId}")
+    @GetMapping("/{restaurantId}")
     public RestaurantResponseDto getRestaurant(
             @PathVariable Long restaurantId
     ) {
@@ -53,7 +60,7 @@ public class RestaurantController {
     }
 
     // 키워드로 업장 검색
-    @GetMapping("/restaurant/search")
+    @GetMapping("/search")
     public List<RestaurantResponseDto> searchRestaurant(
             @RequestParam(value = "keyword") String keyword
     ) {
