@@ -1,5 +1,6 @@
-package com.example.miniprojectdelivery.dto;
+package com.example.miniprojectdelivery.dto.restaurant;
 
+import com.example.miniprojectdelivery.dto.review.ReviewViewResponseDto;
 import com.example.miniprojectdelivery.dto.menu.MenuViewResponseDto;
 import com.example.miniprojectdelivery.model.Restaurant;
 import java.util.ArrayList;

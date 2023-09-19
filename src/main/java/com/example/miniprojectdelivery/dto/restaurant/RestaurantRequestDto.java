@@ -1,4 +1,4 @@
-package com.example.miniprojectdelivery.dto;
+package com.example.miniprojectdelivery.dto.restaurant;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
