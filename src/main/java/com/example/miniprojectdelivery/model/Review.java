@@ -1,19 +1,13 @@
 package com.example.miniprojectdelivery.model;
 
-import com.example.miniprojectdelivery.dto.ReviewRequestDto;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import com.example.miniprojectdelivery.dto.ReviewCreateRequestDto;
+import com.example.miniprojectdelivery.dto.ReviewUpdateRequestDto;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
 @Getter
-public class Review extends TimeStamp{
+public class Reviews extends TimeStamp{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,12 +28,12 @@ public class Review extends TimeStamp{
     private Restaurant restaurant;      // 리뷰 대상 음식점
 
 
-    public void updateContentAndStars(ReviewRequestDto requestDto) {
+    public void updateContentAndStars(ReviewUpdateRequestDto requestDto) {
         this.content = requestDto.getContent();
         this.star = requestDto.getStar();
     }
 
-    public void addContentAndStars(ReviewRequestDto requestDto) {
+    public void addContentAndStars(ReviewCreateRequestDto requestDto) {
         this.content = requestDto.getContent();
         this.star = requestDto.getStar();
     }
