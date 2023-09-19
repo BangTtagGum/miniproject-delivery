@@ -1,11 +1,11 @@
 package com.example.miniprojectdelivery.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
-public class ReviewRequestDto {
+public class ReviewUpdateRequestDto {
 
     @NotBlank(message = "리뷰 내용을 입력해 주세요!")
     private String content; // 리뷰 내용
