@@ -1,4 +1,4 @@
-package com.example.miniprojectdelivery.model;
+package com.example.miniprojectdelivery.enums;
 
 public enum UserRoleEnum {
 

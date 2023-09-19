@@ -1,9 +1,10 @@
 package com.example.miniprojectdelivery.service;
 
 import com.example.miniprojectdelivery.dto.MessageResponseDto;
-import com.example.miniprojectdelivery.dto.RestaurantRequestDto;
-import com.example.miniprojectdelivery.dto.RestaurantResponseDto;
+import com.example.miniprojectdelivery.dto.restaurant.RestaurantRequestDto;
+import com.example.miniprojectdelivery.dto.restaurant.RestaurantResponseDto;
 import com.example.miniprojectdelivery.model.Restaurant;
+import com.example.miniprojectdelivery.model.User;
 import com.example.miniprojectdelivery.repository.RestaurantRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,15 +21,12 @@ public class RestaurantService {
         this.restaurantRepository = restaurantRepository;
     }
 
-
     // 업장 생성
-    @Transactional
-    public RestaurantResponseDto restaurantCreate(RestaurantRequestDto restaurantRequestDto) {
+    public RestaurantResponseDto restaurantCreate(User user, RestaurantRequestDto restaurantRequestDto ) {
         Restaurant restaurant = new Restaurant(restaurantRequestDto);
+        restaurant.addUser(user);
         Restaurant saveRestaurant = restaurantRepository.save(restaurant);
         return new RestaurantResponseDto(saveRestaurant);
-
-
     }
 
     // 업장 수정
@@ -40,7 +38,6 @@ public class RestaurantService {
     }
 
     // 업장 삭제
-    @Transactional
     public ResponseEntity<MessageResponseDto> restaurantDelete(Long id) {
         Restaurant restaurant = findRestaurant(id);
         restaurantRepository.delete(restaurant);
@@ -60,7 +57,6 @@ public class RestaurantService {
     }
 
     // 업장 키워드 검색
-    @Transactional
     public List<RestaurantResponseDto> searchRestaurant(String keyword) {
         return restaurantRepository.findByNameContaining(keyword).stream().map(RestaurantResponseDto::new).toList();
     }

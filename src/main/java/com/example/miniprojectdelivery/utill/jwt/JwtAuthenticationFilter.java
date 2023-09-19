@@ -1,8 +1,8 @@
 package com.example.miniprojectdelivery.utill.jwt;
 
-import com.example.miniprojectdelivery.dto.LoginRequestDto;
-import com.example.miniprojectdelivery.model.Msg;
-import com.example.miniprojectdelivery.model.UserRoleEnum;
+import com.example.miniprojectdelivery.dto.user.LoginRequestDto;
+import com.example.miniprojectdelivery.dto.MessageResponseDto;
+import com.example.miniprojectdelivery.enums.UserRoleEnum;
 import com.example.miniprojectdelivery.utill.security.UserDetailsImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
@@ -70,7 +70,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String msg = "회원을 찾을 수 없습니다.";
 
         try(PrintWriter writer = response.getWriter()) {
-            String jsonDto = mapper.writeValueAsString(new Msg(400, msg));
+            String jsonDto = mapper.writeValueAsString(new MessageResponseDto( msg));
             writer.print(jsonDto);
         } catch (IOException e) {
             log.error("예외 발생: ", e);

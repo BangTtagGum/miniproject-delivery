@@ -1,6 +1,8 @@
 package com.example.miniprojectdelivery.service;
 
-import com.example.miniprojectdelivery.dto.SignupRequestDto;
+import com.example.miniprojectdelivery.dto.MessageResponseDto;
+import com.example.miniprojectdelivery.dto.user.SignupRequestDto;
+import com.example.miniprojectdelivery.enums.UserRoleEnum;
 import com.example.miniprojectdelivery.model.*;
 import com.example.miniprojectdelivery.repository.AuthRepository;
 import com.example.miniprojectdelivery.repository.CustomerRepository;
@@ -32,9 +34,9 @@ public class UserService {
     // ADMIN_TOKEN
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
-    public ResponseEntity<Msg> signup(SignupRequestDto requestDto) {
+    public ResponseEntity<MessageResponseDto> signup(SignupRequestDto requestDto) {
 
-        Msg msg = new Msg(200, "회원가입 성공");
+        MessageResponseDto responseDto = new MessageResponseDto( "회원가입 성공");
 
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
@@ -71,17 +73,17 @@ public class UserService {
         }else {                                 // 아니면 User로 생성
             userRepository.save(new User(username, password, role, email));
         }
-        return new ResponseEntity<>(msg, null, HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, null, HttpStatus.OK);
     }
 
-    public ResponseEntity<Msg> deleteById(Long id) {
+    public ResponseEntity<MessageResponseDto> deleteById(Long id) {
         User entity = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));
 
         userRepository.delete(entity);
 
-        Msg msg = new Msg(200, "회원 삭제 성공");
-        return new ResponseEntity<>(msg, null, HttpStatus.OK);
+        MessageResponseDto responseDto = new MessageResponseDto("회원 삭제 성공");
+        return new ResponseEntity<>(responseDto, null, HttpStatus.OK);
     }
 
     //@Transactional
