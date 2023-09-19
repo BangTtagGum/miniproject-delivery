@@ -12,29 +12,29 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
-public class MemuController {
+@RequestMapping("/api/menus")
+public class MenuController {
 
     private final MenuService menuService;
 
-    @PostMapping("/menus")
+    @PostMapping
     public MemuResponseDto createMenu(@RequestBody MenuRequestDto requestDto){
         return menuService.createMenu(requestDto);
     }
 
-    @GetMapping("/menus")
+    @GetMapping
     public List<MemuResponseDto> getMenus(){
         return menuService.getMenus();
     }
-    @GetMapping("/menus/{id}")
+    @GetMapping("/{id}")
     public MemuResponseDto selectMenu(@PathVariable Long id){
         return menuService.selectMenu(id);
     }
-    @PutMapping("/menus/{id}")
+    @PutMapping("/{id}")
     public MemuResponseDto updateMenu(@PathVariable Long id, @RequestBody MenuRequestDto requestDto){
         return menuService.update(id, requestDto);
     }
-    @DeleteMapping("/menus/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponseDto> deleteMenu(@PathVariable Long id){
         return menuService.deleteMenu(id);
     }
