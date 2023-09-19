@@ -1,5 +1,6 @@
 package com.example.miniprojectdelivery.dto;
 
+import com.example.miniprojectdelivery.model.Restaurant;
 import lombok.Getter;
 
 @Getter

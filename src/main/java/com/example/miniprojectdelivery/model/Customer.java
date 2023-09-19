@@ -39,8 +39,8 @@ public class Customer {
     private Long point = 1000000L;
 
 
-    @OneToMany(mappedBy = "customer")
-    private List<Address> addressList = new ArrayList<>();
+//    @OneToMany(mappedBy = "customer")
+//    private List<Address> addressList = new ArrayList<>();
 
     public Customer(String username, String password, UserRoleEnum role, String email) {
         this.setUsername(username);
@@ -49,6 +49,6 @@ public class Customer {
         this.setEmail(email);
     }
     public void addAdress(String address, String nickname){
-        addressList.add(new Address(address, nickname));
+//        addressList.add(new Address(address, nickname));
     }
 }
