@@ -4,6 +4,7 @@ import com.example.miniprojectdelivery.dto.MessageResponseDto;
 import com.example.miniprojectdelivery.dto.user.SignupRequestDto;
 import com.example.miniprojectdelivery.enums.UserRoleEnum;
 import com.example.miniprojectdelivery.model.*;
+import com.example.miniprojectdelivery.model.Address;
 import com.example.miniprojectdelivery.repository.AuthRepository;
 import com.example.miniprojectdelivery.repository.CustomerRepository;
 import com.example.miniprojectdelivery.repository.UserRepository;
@@ -41,6 +42,7 @@ public class UserService {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
         String email = requestDto.getEmail();
+        Address address = new Address(requestDto.getAddress(), requestDto.getZipcode());
 
         if(!Objects.equals(requestDto.getCheckpassword(), requestDto.getPassword())){
             throw new IllegalArgumentException("패스워드와 패스워드 확인이 다릅니다.");
@@ -71,7 +73,7 @@ public class UserService {
         if(requestDto.isCustomer()){            // isCustomer 가 True면 사용자로 생성
             customerRepository.save(new Customer(username, password, role, email));
         }else {                                 // 아니면 User로 생성
-            userRepository.save(new User(username, password, role, email));
+            userRepository.save(new User(username, password, role, email,address));
         }
         return new ResponseEntity<>(responseDto, null, HttpStatus.OK);
     }
