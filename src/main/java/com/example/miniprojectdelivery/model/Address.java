@@ -1,26 +1,22 @@
 package com.example.miniprojectdelivery.model;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Embeddable
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Address {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(nullable = false)
-    private String address;
+    private String address; //지번 주소
 
-    @Column(nullable = false)
-    private String nickname;
+    private String street;  //도로명 주소
 
-    public Address(String address, String nickname) {
+    public Address(String address, String street) {
         this.address = address;
-        this.nickname = nickname;
+        this.street = street;
     }
 }
