@@ -23,6 +23,8 @@ public class Restaurant {
     @Column(nullable = false)
     private String address;
 
+    private int totalSales;
+
     @OneToOne
     @JoinColumn(name = "owner_id")
     private User user;
@@ -45,5 +47,10 @@ public class Restaurant {
 
     public void addUser(User user) {
         this.user = user;
+    }
+
+    public void addTotalSales(int num) {
+        this.totalSales += num;
+        this.user.addPoint(num); //사장님의 포인트도 입금
     }
 }
