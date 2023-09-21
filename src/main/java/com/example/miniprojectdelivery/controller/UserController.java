@@ -18,10 +18,20 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping("/login-page")
+    public String loginPage() {
+        return "login";
+    }
+
+    @GetMapping("/signup")
+    public String signupPage() {
+        return "signup";
+    }
+
     @PostMapping("/signup")
-    @ResponseBody
-    public ResponseEntity<MessageResponseDto> signup(@Valid @RequestBody SignupRequestDto signupRequestDto){
-        return userService.signup(signupRequestDto);
+    public String signup(@Valid @RequestBody SignupRequestDto signupRequestDto){
+        userService.signup(signupRequestDto);
+        return "redirect:/api/users/login-page";
     }
 
     @DeleteMapping("/{id}")
