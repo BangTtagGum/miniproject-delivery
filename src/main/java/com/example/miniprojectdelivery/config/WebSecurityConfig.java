@@ -55,12 +55,13 @@ public class WebSecurityConfig {
 
         http.authorizeHttpRequests((authorizeHttpRequests) ->
                 authorizeHttpRequests
-                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
+                        // test용
+                        .requestMatchers("/test/**").permitAll()  // html 모두 허용
+
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/lib/**", "/scss/**").permitAll() // resources 접근 허용 설정
                         .requestMatchers("/api/users/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
 
-                        // 조회 API는 비로그인 유저도 접근 가능.
-                        .requestMatchers(HttpMethod.GET, "/api/post/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/posts").permitAll()
                         .anyRequest().authenticated() // 그 외 모든 요청 인증처리
         );
         // 필터 관리
