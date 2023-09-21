@@ -49,12 +49,14 @@ public class MenuService {
     }
 
     @Transactional
-    public MenuResponseDto update(Long id, MenuUpdateRequestDto requestDto) {
+    public MenuResponseDto update(Long id, MultipartFile newImage, String name, int cost) throws IOException {
         Menu menu = findMenu(id);
-        menu.update(requestDto);
+        String oldFileUrl = menu.getImage().getPath().substring(1);
+        String updatedImageUrl = s3Uploader.updateFile(newImage, oldFileUrl, "images");
+        URL updatedImageUrlObject = new URL(updatedImageUrl);
+        menu.update(updatedImageUrlObject, name, cost); // Menu 엔터티 업데이트
         return new MenuResponseDto(menu);
     }
-
     public MessageResponseDto deleteMenu(Long id) {
         Menu menu = findMenu(id);
         menuRepository.delete(menu);

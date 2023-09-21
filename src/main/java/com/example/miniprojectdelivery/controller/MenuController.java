@@ -43,8 +43,10 @@ public class MenuController {
     @PutMapping("/{id}")
     public MenuResponseDto updateMenu(
             @PathVariable Long id,
-            @Valid @RequestBody MenuUpdateRequestDto requestDto){
-        return menuService.update(id, requestDto);
+            @RequestParam(value = "image") MultipartFile newImage,
+            @RequestParam("name") String name,
+            @RequestParam("cost") int cost) throws IOException {
+        return menuService.update(id, newImage, name, cost);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponseDto> deleteMenu(@PathVariable Long id){

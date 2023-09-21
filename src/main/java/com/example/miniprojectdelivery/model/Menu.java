@@ -37,9 +37,9 @@ public class Menu {
         this.cost = cost;
     }
 
-    public void update(MenuUpdateRequestDto requestDto) {
-        this.image = requestDto.getImage();
-        this.name = requestDto.getName();
-        this.cost = requestDto.getCost();
+    public void update(URL updatedImageUrlObject, String name, int cost) {
+        this.image = updatedImageUrlObject;
+        this.name = name;
+        this.cost = cost;
     }
 }
