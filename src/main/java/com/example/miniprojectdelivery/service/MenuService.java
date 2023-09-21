@@ -59,6 +59,8 @@ public class MenuService {
     }
     public MessageResponseDto deleteMenu(Long id) {
         Menu menu = findMenu(id);
+        String filePathInS3 = menu.getImage().getPath().substring(1);
+        s3Uploader.deleteFile(filePathInS3);
         menuRepository.delete(menu);
         return new MessageResponseDto("메뉴 삭제 성공!");
     }
