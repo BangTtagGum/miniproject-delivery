@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.net.URL;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -15,7 +17,7 @@ public class Menu {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String image;  // S3연동예정, 더미필드(임시)
+    private URL image;  // S3연동예정, 더미필드(임시)
 
     @Column(nullable = false)
     private String name;
@@ -27,12 +29,12 @@ public class Menu {
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-    public Menu(MenuCreateRequestDto requestDto, Restaurant restaurant) {
+    public Menu(String name, int cost, Restaurant restaurant, URL image) {
         this.id = getId();
-        this.restaurant = restaurant; // 임의 Restaurant 생성
-        this.image = requestDto.getImage();
-        this.name = requestDto.getName();
-        this.cost = requestDto.getCost();
+        this.restaurant = restaurant;
+        this.image = image;
+        this.name = name;
+        this.cost = cost;
     }
 
     public void update(MenuUpdateRequestDto requestDto) {

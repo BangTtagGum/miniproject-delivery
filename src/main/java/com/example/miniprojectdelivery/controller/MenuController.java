@@ -9,7 +9,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -20,8 +22,12 @@ public class MenuController {
     private final MenuService menuService;
 
     @PostMapping
-    public MenuResponseDto createMenu(@Valid @RequestBody MenuCreateRequestDto requestDto){
-        return menuService.createMenu(requestDto);
+    public MenuResponseDto createMenu(
+            @Valid @RequestParam("image") MultipartFile image,
+            @Valid @RequestParam("restaurantId") Long restaurantId,
+            @Valid @RequestParam("name") String name,
+            @Valid @RequestParam("cost") int cost) throws IOException {
+        return menuService.createMenu(image, restaurantId, name, cost);
     }
 
     @GetMapping

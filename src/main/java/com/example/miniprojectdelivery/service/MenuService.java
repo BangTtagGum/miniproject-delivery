@@ -11,7 +11,10 @@ import com.example.miniprojectdelivery.repository.RestaurantRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 @Service
@@ -20,13 +23,20 @@ public class MenuService {
 
     private final MenuRepository menuRepository;
     private final RestaurantRepository restaurantRepository;
+    private final S3Uploader s3Uploader;
 
-    public MenuResponseDto createMenu(MenuCreateRequestDto requestDto) {
-        Restaurant restaurant = restaurantRepository.findById(requestDto.getRestaurantId()).orElseThrow(
-                ()-> new IllegalArgumentException("음식점을 찾을 수 없습니다"));
-        Menu menu = menuRepository.save(new Menu(requestDto, restaurant));
-       return new MenuResponseDto(menu);
+    public MenuResponseDto createMenu(MultipartFile image, Long restaurantId, String name, int cost) throws IOException {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(
+                () -> new IllegalArgumentException("음식점을 찾을 수 없습니다"));
+
+        // 이미지 S3에 업로드 및 URL 가져오기
+        String storedFileName = s3Uploader.upload(image, "images");
+        URL imageUrl = new URL(storedFileName);
+
+        Menu menu = menuRepository.save(new Menu(name, cost, restaurant, imageUrl));
+        return new MenuResponseDto(menu);
     }
+
 
     public List<MenuResponseDto> getMenus() {
         List<Menu> menuList = menuRepository.findAll();
