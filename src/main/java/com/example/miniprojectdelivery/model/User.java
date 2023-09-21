@@ -39,6 +39,7 @@ public class User {
     private Long point;
 
     public User(String username, String password, UserRoleEnum role, String email, Address address) {
+        System.out.println("makeuser");
         this.username = username;
         this.password = password;
         this.role = role;

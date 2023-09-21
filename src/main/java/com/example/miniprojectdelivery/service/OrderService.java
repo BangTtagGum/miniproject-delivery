@@ -28,6 +28,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final MenuRepository menuRepository;
+    private final NotificationService notificationService;
 
     /**
      * 유저 주문 조회
@@ -100,6 +101,9 @@ public class OrderService {
                     throw new IllegalArgumentException("배송하려는 주문을 찾을 수 없습니다.");
                 }
         );
+
+        notificationService.send("원하는 대상의 Username", "배달 완료했습니다.", "chat");
+
         order.delivery();
     }
 }
