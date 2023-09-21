@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    @GetMapping("/login-page")
+    public String loginPage() {
+        return "login";
+    }
 
     @PostMapping("/signup")
     @ResponseBody
