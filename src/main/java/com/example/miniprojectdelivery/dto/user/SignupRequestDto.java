@@ -1,6 +1,7 @@
 package com.example.miniprojectdelivery.dto.user;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +10,6 @@ import lombok.Setter;
 
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 public class SignupRequestDto {
 
     @Pattern(
@@ -36,8 +35,8 @@ public class SignupRequestDto {
 
     private int checkemail;     // email로 보낸 코드
 
-    private String address; // 지번 주소
-    private String street; // 주소 번호
+    private String address; // 지번 주소 도시명
+    private String street; // 도로명 주소
 
     private boolean admin = false;
     private String adminToken ="";
