@@ -44,7 +44,7 @@ public class UserService {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
         String email = requestDto.getEmail();
-        int checkemail = requestDto.getCheckemail();
+        String checkemail = requestDto.getCheckemail();
         Address address = new Address(requestDto.getAddress(), requestDto.getStreet());
 
         if(!Objects.equals(requestDto.getCheckpassword(), requestDto.getPassword())){
@@ -74,7 +74,7 @@ public class UserService {
         }
 
         //인증번호 일치여부 체크
-        if (checkemail != Integer.parseInt(emailAuthNum)) {
+        if (checkemail.equals(emailAuthNum)) {
             throw new IllegalArgumentException("인증번호가 일치하지 않습니다.");
         }
 

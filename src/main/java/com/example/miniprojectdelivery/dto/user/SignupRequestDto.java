@@ -33,7 +33,7 @@ public class SignupRequestDto {
     @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$", message = "올바른 이메일 형식이 아닙니다.")
     private String email;
 
-    private int checkemail;     // email로 보낸 코드
+    private String checkemail;     // email로 보낸 코드
 
     private String address; // 지번 주소 도시명
     private String street; // 도로명 주소
