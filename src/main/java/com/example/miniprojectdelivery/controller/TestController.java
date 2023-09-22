@@ -9,11 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TestController {
 
     // 반환사이트 확인용 임시 Controller
-    @GetMapping("/review")
-    public String review() {
-        return "review";
-    }
-
     @GetMapping("/search")
     public String search() {
         return "search";
