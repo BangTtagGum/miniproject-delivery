@@ -35,9 +35,9 @@ public class UserService {
     // ADMIN_TOKEN
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
-    public void signup(SignupRequestDto requestDto) {
+    public ResponseEntity<MessageResponseDto> signup(SignupRequestDto requestDto) {
 
-//        MessageResponseDto responseDto = new MessageResponseDto( "회원가입 성공");  -> 로그인페이지로 반환
+        MessageResponseDto responseDto = new MessageResponseDto( "회원가입 성공");
 
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
@@ -75,6 +75,7 @@ public class UserService {
         }else {                                 // 아니면 User로 생성
             userRepository.save(new User(username, password, role, email,address));
         }
+        return new ResponseEntity<>(responseDto, null, HttpStatus.OK);
     }
 
     public ResponseEntity<MessageResponseDto> deleteById(Long id) {

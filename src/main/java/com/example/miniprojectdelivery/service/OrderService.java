@@ -2,23 +2,15 @@ package com.example.miniprojectdelivery.service;
 
 import com.example.miniprojectdelivery.dto.order.OrderCreateRequestDto;
 import com.example.miniprojectdelivery.dto.order.OrderResponseDto;
-import com.example.miniprojectdelivery.enums.UserRoleEnum;
-import com.example.miniprojectdelivery.model.Address;
-import com.example.miniprojectdelivery.model.Delivery;
-import com.example.miniprojectdelivery.model.Menu;
-import com.example.miniprojectdelivery.model.Order;
-import com.example.miniprojectdelivery.model.OrderMenu;
-import com.example.miniprojectdelivery.model.User;
+import com.example.miniprojectdelivery.model.*;
 import com.example.miniprojectdelivery.repository.MenuRepository;
 import com.example.miniprojectdelivery.repository.OrderRepository;
 import com.example.miniprojectdelivery.repository.UserRepository;
-import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -28,6 +20,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
     private final MenuRepository menuRepository;
+    private final NotificationService notificationService;
 
     /**
      * 유저 주문 조회
@@ -100,6 +93,9 @@ public class OrderService {
                     throw new IllegalArgumentException("배송하려는 주문을 찾을 수 없습니다.");
                 }
         );
+
+        notificationService.send("원하는 대상의 Username", "배달 완료했습니다.", "chat");
+
         order.delivery();
     }
 }
