@@ -36,7 +36,7 @@
     <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
-
+<!--<iframe src=“login.html" id="iframe"></iframe>-->
 <!-- Navbar & Hero Start -->
 <div class="container-xxl position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
@@ -59,7 +59,7 @@
                         <a onclick="location.href='/test/owner'" class="dropdown-item">Owner</a>
                     </div>
                 </div>
-                <a onclick="location.href='/api/users/login-page'" class="nav-item nav-link">Login</a>
+                <a onclick="location.href='/api/users/login-page'" class="nav-item nav-link" id="login2">Login</a>
             </div>
             <a onclick="location.href='/test/search'" class="btn btn-primary py-2 px-4">Order</a>
         </div>
@@ -121,6 +121,12 @@
     </div>
 
     <script>
+
+        document.getElementById("login-id-submit").addEventListener("click", function(event) {
+            event.preventDefault();
+
+        })
+
         function onclickAdmin() {
             var checkBox = document.getElementById("admin-check");
             var box = document.getElementById("admin-token");
@@ -169,11 +175,13 @@
                 url: "/api/users/signup",
                 contentType: "application/json",
                 data: JSON.stringify(formData),
-                success: function (response) {
-                    alert(response.message);
+                success: function () {
+                    document.getElementById('login2').click();
                 },
                 error: function (err) {
-                    alert("Error: " + err.responseText);
+
+                    var msg = err.responseText;
+                    alert(JSON.parse(msg)["msg"]);
                 }
             });
         }
