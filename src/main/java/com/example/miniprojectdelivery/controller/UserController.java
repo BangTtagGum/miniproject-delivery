@@ -23,6 +23,11 @@ public class UserController {
         return "login";
     }
 
+    @GetMapping("/login-redirect")
+    public String loginRedirect() {
+        return "redirect:/api/users/login-page";
+    }
+
     @GetMapping("/signup")
     public String signupPage() {
         return "signup";
