@@ -1,12 +1,13 @@
 package com.example.miniprojectdelivery.service;
 
 import com.example.miniprojectdelivery.dto.MessageResponseDto;
+import com.example.miniprojectdelivery.dto.user.MailRequestDto;
 import com.example.miniprojectdelivery.dto.user.SignupRequestDto;
 import com.example.miniprojectdelivery.enums.UserRoleEnum;
 import com.example.miniprojectdelivery.model.*;
 import com.example.miniprojectdelivery.model.Address;
-import com.example.miniprojectdelivery.repository.AuthRepository;
 import com.example.miniprojectdelivery.repository.CustomerRepository;
+import com.example.miniprojectdelivery.repository.RedisRepository;
 import com.example.miniprojectdelivery.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,10 +31,11 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AuthRepository authRepository;
+    private final RedisRepository redisRepository;
     private final CustomerRepository customerRepository;
     // ADMIN_TOKEN
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
+    private final String MAIL_PREFIX = "mail:";
 
     public ResponseEntity<MessageResponseDto> signup(SignupRequestDto requestDto) {
 
@@ -42,6 +44,7 @@ public class UserService {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
         String email = requestDto.getEmail();
+        String checkemail = requestDto.getCheckemail();
         Address address = new Address(requestDto.getAddress(), requestDto.getStreet());
 
         if(!Objects.equals(requestDto.getCheckpassword(), requestDto.getPassword())){
@@ -54,22 +57,32 @@ public class UserService {
         }
 
         // 사용자 ROLE 확인
-        UserRoleEnum role = UserRoleEnum.USER;
+        UserRoleEnum role = UserRoleEnum.CUSTOMER;
         if(requestDto.isAdmin()){
             if(!ADMIN_TOKEN.equals(requestDto.getAdminToken())){
                 throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능 합니다.");
             }
-            role = UserRoleEnum.ADMIN;
+            role = UserRoleEnum.OWNER;
         }
 
-        Auth auth = authRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("이메일 인증이 진행되지 않은 메일입니다."));
-        if(requestDto.getCheckemail() != auth.getPaswword()){
-            authRepository.delete(auth);
-            throw new IllegalArgumentException("이메일 인증이 틀렸습니다. 다시 진행해주세요");
+        //이메일번호 인증
+        String emailAuthNum = redisRepository.getValue(MAIL_PREFIX + email);
+
+        //인증번호 유무 체크
+        if (emailAuthNum == null) {
+            throw new IllegalArgumentException("이메일 인증번호를 발급 받아야 합니다.");
         }
-        authRepository.delete(auth);
-        // 사용자 등록
+
+        //인증번호 일치여부 체크
+        if (!checkemail.equals(emailAuthNum)) {
+            throw new IllegalArgumentException("인증번호가 일치하지 않습니다.");
+        }
+
+        //인증 성공시 인증번호 만료
+        redisRepository.setExpire(MAIL_PREFIX + email,0L);
+
+        //todo: 주소 requestDto에 validation 추가
+
         if(requestDto.isCustomer()){            // isCustomer 가 True면 사용자로 생성
             customerRepository.save(new Customer(username, password, role, email));
         }else {                                 // 아니면 User로 생성
@@ -89,9 +102,10 @@ public class UserService {
     }
 
     //@Transactional
-    public void Mailing(Mail email) {
+    public void Mailing(MailRequestDto requestDto) {
         int rand = (int) (Math.random()*10000);
-        log.info(Integer.toString(rand));
+        String randStr = String.format("%04d", rand);
+        log.info(randStr);
         /** 메일 HOST **/
         String HOST = "smtp.naver.com";
         /** 메일 PORT **/
@@ -103,7 +117,7 @@ public class UserService {
 
         try {
             InternetAddress[] receiverList = new InternetAddress[1];
-            receiverList[0] = new InternetAddress(email.getEmail());
+            receiverList[0] = new InternetAddress(requestDto.getEmail());
             // SMTP 발송 Properties 설정
             Properties props = new Properties();
             props.put("mail.transport.protocol", "smtp");
@@ -126,7 +140,7 @@ public class UserService {
             // 메일 제목
             mimeMessage.setSubject("인증 메일입니다.");
             // 메일 본문 (.setText를 사용하면 단순 텍스트 전달 가능)
-            mimeMessage.setText(Integer.toString(rand)+"를 입력해주세요");
+            mimeMessage.setText(randStr+"를 입력해주세요");
             // Mail 발송
             Transport.send(mimeMessage);
 
@@ -135,13 +149,14 @@ public class UserService {
             log.info("메일 발송 오류!!");
         }
         try {
-            if(!authRepository.findByEmail(email.getEmail()).isEmpty()){
-                authRepository.delete(authRepository.findByEmail(email.getEmail()).orElseThrow());
-            }
-            authRepository.save(new Auth(email.getEmail(), rand));
+            //todo: 레디스로 변경 필요
+            String email = requestDto.getEmail();
+            String key = MAIL_PREFIX + email;
+            redisRepository.save(key,randStr);
+            redisRepository.setExpire(key, 180L); // 만료 기간 지정 (3분)
         }catch(Exception e){
             log.info(e.getMessage());
-            log.info("DB 저장 오류");
+            log.info("Redis 저장 오류");
         }
     }
 }

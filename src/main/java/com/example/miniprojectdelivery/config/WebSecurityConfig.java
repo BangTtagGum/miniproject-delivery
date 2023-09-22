@@ -1,5 +1,6 @@
 package com.example.miniprojectdelivery.config;
 
+import com.example.miniprojectdelivery.service.RefreshTokenService;
 import com.example.miniprojectdelivery.utill.jwt.JwtAuthenticationFilter;
 import com.example.miniprojectdelivery.utill.jwt.JwtAuthorizationFilter;
 import com.example.miniprojectdelivery.utill.jwt.JwtUtil;
@@ -23,6 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     private final JwtUtil jwtUtil;
+    private final RefreshTokenService refreshTokenService;
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationConfiguration authenticationConfiguration;
 
@@ -33,7 +35,7 @@ public class WebSecurityConfig {
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtUtil);
+        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtUtil,refreshTokenService);
         filter.setAuthenticationManager(authenticationManager(authenticationConfiguration));
         return filter;
     }

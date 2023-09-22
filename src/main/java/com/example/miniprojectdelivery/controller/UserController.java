@@ -3,7 +3,7 @@ package com.example.miniprojectdelivery.controller;
 
 import com.example.miniprojectdelivery.dto.MessageResponseDto;
 import com.example.miniprojectdelivery.dto.user.SignupRequestDto;
-import com.example.miniprojectdelivery.model.Mail;
+import com.example.miniprojectdelivery.dto.user.MailRequestDto;
 import com.example.miniprojectdelivery.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +17,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-    @GetMapping("/login-page")
-    public String loginPage() {
-        return "login";
-    }
 
     @GetMapping("/login-page")
     public String loginPage() {
@@ -51,7 +47,7 @@ public class UserController {
 
     @PostMapping("/mailing")
     @ResponseBody
-    public void mailing(@RequestBody Mail email){
+    public void mailing(@RequestBody @Valid MailRequestDto email){
         userService.Mailing(email);
     }
 
