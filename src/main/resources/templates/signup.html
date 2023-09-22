@@ -91,7 +91,7 @@
     </div>
     <!-- Spinner End -->
 
-    <div id="login-form" style="height: 1000px">
+    <div id="login-form" style="height: 1400px">
         <div id="login-title" style="text-align: center;">Sign Up</div>
 
         <form>
@@ -110,6 +110,11 @@
             </div>
             <div class="login-id-label">Email Code</div>
             <input type="text" name="checkemail" required class="login-input-box">
+
+            <div class="login-id-label">Address</div>
+            <input type="text" name="address" required placeholder="address" class="login-input-box">
+            <div class="login-id-label">Street</div>
+            <input type="text" name="street" required placeholder="street" class="login-input-box">
             <div>
                 <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;">사업자
                 <input id="admin-token" type="password" name="adminToken" placeholder="사업자 암호" class="login-input-box"
@@ -122,7 +127,7 @@
 
     <script>
 
-        document.getElementById("login-id-submit").addEventListener("click", function(event) {
+        document.getElementById("login-id-submit").addEventListener("click", function (event) {
             event.preventDefault();
 
         })
@@ -164,6 +169,8 @@
                 username: $('[name="username"]').val(),
                 password: $('[name="password"]').val(),
                 checkpassword: $('[name="checkpassword"]').val(),
+                address: $('[name="address"]').val(),
+                street: $('[name="street"]').val(),
                 email: $('[name="email"]').val(),
                 checkemail: $('[name="checkemail"]').val(),
                 admin: document.getElementById("admin-check").checked,
