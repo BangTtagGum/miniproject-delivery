@@ -37,7 +37,7 @@ public class SignupRequestDto {
     private int checkemail;     // email로 보낸 코드
 
     private String address; // 지번 주소
-    private String zipcode; // 주소 번호
+    private String street; // 주소 번호
 
     private boolean admin = false;
     private String adminToken ="";

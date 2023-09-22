@@ -42,7 +42,7 @@ public class UserService {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
         String email = requestDto.getEmail();
-        Address address = new Address(requestDto.getAddress(), requestDto.getZipcode());
+        Address address = new Address(requestDto.getAddress(), requestDto.getStreet());
 
         if(!Objects.equals(requestDto.getCheckpassword(), requestDto.getPassword())){
             throw new IllegalArgumentException("패스워드와 패스워드 확인이 다릅니다.");
