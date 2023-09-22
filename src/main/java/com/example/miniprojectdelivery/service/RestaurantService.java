@@ -60,4 +60,9 @@ public class RestaurantService {
     public List<RestaurantResponseDto> searchRestaurant(String keyword) {
         return restaurantRepository.findByNameContaining(keyword).stream().map(RestaurantResponseDto::new).toList();
     }
+
+    // 랭킹 Top 4 조회
+    public List<Restaurant> updateRanking() {
+        return restaurantRepository.findTop4ByOrderByTotalSalesDesc();
+    }
 }
