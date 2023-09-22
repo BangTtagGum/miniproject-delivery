@@ -36,5 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 
+# application.properties 파일 무시
+src/main/resources/application.properties
+
+# build.gradle 파일 무시
 build.gradle
-application.properties

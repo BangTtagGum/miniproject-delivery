@@ -11,7 +11,10 @@ import com.example.miniprojectdelivery.repository.RestaurantRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 @Service
@@ -20,13 +23,20 @@ public class MenuService {
 
     private final MenuRepository menuRepository;
     private final RestaurantRepository restaurantRepository;
+    private final S3Uploader s3Uploader;
 
-    public MenuResponseDto createMenu(MenuCreateRequestDto requestDto) {
-        Restaurant restaurant = restaurantRepository.findById(requestDto.getRestaurantId()).orElseThrow(
-                ()-> new IllegalArgumentException("음식점을 찾을 수 없습니다"));
-        Menu menu = menuRepository.save(new Menu(requestDto, restaurant));
-       return new MenuResponseDto(menu);
+    public MenuResponseDto createMenu(MultipartFile image, Long restaurantId, String name, int cost) throws IOException {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(
+                () -> new IllegalArgumentException("음식점을 찾을 수 없습니다"));
+
+        // 이미지 S3에 업로드 및 URL 가져오기
+        String storedFileName = s3Uploader.upload(image, "images");
+        URL imageUrl = new URL(storedFileName);
+
+        Menu menu = menuRepository.save(new Menu(name, cost, restaurant, imageUrl));
+        return new MenuResponseDto(menu);
     }
+
 
     public List<MenuResponseDto> getMenus() {
         List<Menu> menuList = menuRepository.findAll();
@@ -39,14 +49,18 @@ public class MenuService {
     }
 
     @Transactional
-    public MenuResponseDto update(Long id, MenuUpdateRequestDto requestDto) {
+    public MenuResponseDto update(Long id, MultipartFile newImage, String name, int cost) throws IOException {
         Menu menu = findMenu(id);
-        menu.update(requestDto);
+        String oldFileUrl = menu.getImage().getPath().substring(1);
+        String updatedImageUrl = s3Uploader.updateFile(newImage, oldFileUrl, "images");
+        URL updatedImageUrlObject = new URL(updatedImageUrl);
+        menu.update(updatedImageUrlObject, name, cost); // Menu 엔터티 업데이트
         return new MenuResponseDto(menu);
     }
-
     public MessageResponseDto deleteMenu(Long id) {
         Menu menu = findMenu(id);
+        String filePathInS3 = menu.getImage().getPath().substring(1);
+        s3Uploader.deleteFile(filePathInS3);
         menuRepository.delete(menu);
         return new MessageResponseDto("메뉴 삭제 성공!");
     }
