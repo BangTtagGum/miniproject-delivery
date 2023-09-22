@@ -17,7 +17,7 @@ public class Menu {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private URL image;  // S3연동예정, 더미필드(임시)
+    private URL image;
 
     @Column(nullable = false)
     private String name;
@@ -25,7 +25,7 @@ public class Menu {
     @Column(nullable = false)
     private int cost;
 
-    @ManyToOne   // Restaurant에서 @OneToMany 필요함
+    @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
