@@ -74,7 +74,7 @@ public class UserService {
         }
 
         //인증번호 일치여부 체크
-        if (checkemail.equals(emailAuthNum)) {
+        if (!checkemail.equals(emailAuthNum)) {
             throw new IllegalArgumentException("인증번호가 일치하지 않습니다.");
         }
 
