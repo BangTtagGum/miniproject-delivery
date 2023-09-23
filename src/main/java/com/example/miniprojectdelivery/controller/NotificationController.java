@@ -20,8 +20,6 @@ public class NotificationController {
 
     @GetMapping("/noti/{userId}")
     public void sendNoti(@PathVariable String userId){
-        System.out.println("hello");
         notificationService.send(userId, "알람입니다.","chat");
     }
-
 }

@@ -72,14 +72,17 @@ public class OrderService {
         Delivery delivery = new Delivery(); //주문 배송정보 생성
         delivery.setAddress(user.getAddress()); //유저의 배송정보 저장
 
+
         //주문상품 생성
         OrderMenu orderMenu = OrderMenu.createOrderItem(menu, menu.getCost(), requestDto.getCount());
 
+        String owenrname = user.getUsername();
+        System.out.println(user.getUsername());
         //주문 생성
         Order order = Order.createOrder(user, delivery, orderMenu);
+        notificationService.send(owenrname, "주문이 들어왔습니다.", "chat");
 
         orderRepository.save(order);
-
         return new OrderResponseDto(order);
     }
 
@@ -94,8 +97,7 @@ public class OrderService {
                 }
         );
 
-        notificationService.send("원하는 대상의 Username", "배달 완료했습니다.", "chat");
-
+        notificationService.send(order.getUser().getUsername(), "배달 완료했습니다.", "chat");
         order.delivery();
     }
 }

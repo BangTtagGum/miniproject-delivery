@@ -28,7 +28,6 @@ public class MenuService {
     public MenuResponseDto createMenu(MultipartFile image, Long restaurantId, String name, int cost) throws IOException {
         Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(
                 () -> new IllegalArgumentException("음식점을 찾을 수 없습니다"));
-
         // 이미지 S3에 업로드 및 URL 가져오기
         String storedFileName = s3Uploader.upload(image, "images");
         URL imageUrl = new URL(storedFileName);
