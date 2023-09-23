@@ -81,7 +81,7 @@ public class RestaurantController {
 
     // 키워드로 업장 검색
     @GetMapping("/search")
-    public ResponseEntity<List<RestaurantResponseDto>> searchRestaurant(Model model,
+    public ResponseEntity<List<RestaurantResponseDto>> searchRestaurant(
             @RequestParam(value = "keyword") String keyword
     ) {
         return ResponseEntity.ok().body(restaurantService.searchRestaurant(keyword));
