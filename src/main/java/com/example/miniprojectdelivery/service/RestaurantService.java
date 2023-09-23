@@ -6,6 +6,7 @@ import com.example.miniprojectdelivery.dto.restaurant.RestaurantResponseDto;
 import com.example.miniprojectdelivery.model.Restaurant;
 import com.example.miniprojectdelivery.model.User;
 import com.example.miniprojectdelivery.repository.RestaurantRepository;
+import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class RestaurantService {
+public class
+RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
 
@@ -23,9 +25,15 @@ public class RestaurantService {
 
     // 업장 생성
     public RestaurantResponseDto restaurantCreate(User user, RestaurantRequestDto restaurantRequestDto ) {
-        Restaurant restaurant = new Restaurant(restaurantRequestDto);
-        restaurant.addUser(user);
-        Restaurant saveRestaurant = restaurantRepository.save(restaurant);
+
+        Optional<Restaurant> restaurant = restaurantRepository.findByUser(user);
+        if(restaurant.isPresent()) {
+            throw new IllegalArgumentException("하나의 업장만 개설 가능합니다.");
+        }
+
+        Restaurant newRestaurant = new Restaurant(restaurantRequestDto);
+        newRestaurant.addUser(user);
+        Restaurant saveRestaurant = restaurantRepository.save(newRestaurant);
         return new RestaurantResponseDto(saveRestaurant);
     }
 
@@ -49,6 +57,7 @@ public class RestaurantService {
     private Restaurant findRestaurant(Long id) {
         return restaurantRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("선택한 업장이 없습니다."));
     }
+
 
     // 업장 상세 조회
     public RestaurantResponseDto getRestaurant(Long id) {

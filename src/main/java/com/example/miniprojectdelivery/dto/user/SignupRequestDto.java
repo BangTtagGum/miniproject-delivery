@@ -38,10 +38,7 @@ public class SignupRequestDto {
     private String address; // 지번 주소 도시명
     private String street; // 도로명 주소
 
-    private boolean admin = false;
-    private String adminToken ="";
-
-    private boolean customer = false;
+    private boolean owner = false;
 
 }
 

@@ -6,7 +6,6 @@ import com.example.miniprojectdelivery.dto.user.SignupRequestDto;
 import com.example.miniprojectdelivery.enums.UserRoleEnum;
 import com.example.miniprojectdelivery.model.*;
 import com.example.miniprojectdelivery.model.Address;
-import com.example.miniprojectdelivery.repository.CustomerRepository;
 import com.example.miniprojectdelivery.repository.RedisRepository;
 import com.example.miniprojectdelivery.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +31,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RedisRepository redisRepository;
-    private final CustomerRepository customerRepository;
     // ADMIN_TOKEN
-    private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
     private final String MAIL_PREFIX = "mail:";
 
     public ResponseEntity<MessageResponseDto> signup(SignupRequestDto requestDto) {
@@ -56,15 +53,6 @@ public class UserService {
             throw new IllegalArgumentException("중복된 username 입니다.");
         }
 
-        // 사용자 ROLE 확인
-        UserRoleEnum role = UserRoleEnum.CUSTOMER;
-        if(requestDto.isAdmin()){
-            if(!ADMIN_TOKEN.equals(requestDto.getAdminToken())){
-                throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능 합니다.");
-            }
-            role = UserRoleEnum.OWNER;
-        }
-
         //이메일번호 인증
         String emailAuthNum = redisRepository.getValue(MAIL_PREFIX + email);
 
@@ -83,11 +71,14 @@ public class UserService {
 
         //todo: 주소 requestDto에 validation 추가
 
-        if(requestDto.isCustomer()){            // isCustomer 가 True면 사용자로 생성
-            customerRepository.save(new Customer(username, password, role, email));
-        }else {                                 // 아니면 User로 생성
-            userRepository.save(new User(username, password, role, email,address));
+        // 사용자 ROLE 확인
+        UserRoleEnum role = UserRoleEnum.CUSTOMER;
+        if(requestDto.isOwner()){
+            role = UserRoleEnum.OWNER;
         }
+
+        userRepository.save(new User(username, password, role, email,address));
+
         return new ResponseEntity<>(responseDto, null, HttpStatus.OK);
     }
 
