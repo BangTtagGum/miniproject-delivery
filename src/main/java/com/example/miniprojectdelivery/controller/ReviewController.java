@@ -47,8 +47,10 @@ public class ReviewController {
     @Secured("ROLE_CUSTOMER")
     @PutMapping("/{id}")
     public ReviewResponseDto updateReview(@PathVariable Long id,
-            @RequestBody @Valid ReviewUpdateRequestDto requestDto) {
-        ReviewResponseDto responseDto = reviewService.updateReview(id, requestDto);
+            @RequestBody @Valid ReviewUpdateRequestDto requestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        ReviewResponseDto responseDto = reviewService.updateReview(id, requestDto, userDetails.getUser());
         return responseDto;
     }
 
@@ -58,8 +60,10 @@ public class ReviewController {
      */
     @Secured("ROLE_CUSTOMER")
     @DeleteMapping("/{id}")
-    public MessageResponseDto deleteReview(@PathVariable Long id) {
-        String message = reviewService.deleteReview(id);
+    public MessageResponseDto deleteReview(@PathVariable Long id,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+            ) {
+        String message = reviewService.deleteReview(id, userDetails.getUser());
         return new MessageResponseDto(message);
     }
 }
