@@ -56,15 +56,6 @@ public class UserService {
             throw new IllegalArgumentException("중복된 username 입니다.");
         }
 
-        // 사용자 ROLE 확인
-        UserRoleEnum role = UserRoleEnum.CUSTOMER;
-        if(requestDto.isAdmin()){
-            if(!ADMIN_TOKEN.equals(requestDto.getAdminToken())){
-                throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능 합니다.");
-            }
-            role = UserRoleEnum.OWNER;
-        }
-
         //이메일번호 인증
         String emailAuthNum = redisRepository.getValue(MAIL_PREFIX + email);
 
@@ -83,11 +74,14 @@ public class UserService {
 
         //todo: 주소 requestDto에 validation 추가
 
-        if(requestDto.isCustomer()){            // isCustomer 가 True면 사용자로 생성
-            customerRepository.save(new Customer(username, password, role, email));
-        }else {                                 // 아니면 User로 생성
-            userRepository.save(new User(username, password, role, email,address));
+        // 사용자 ROLE 확인
+        UserRoleEnum role = UserRoleEnum.CUSTOMER;
+        if(requestDto.isOwner()){
+            role = UserRoleEnum.OWNER;
         }
+
+        userRepository.save(new User(username, password, role, email,address));
+
         return new ResponseEntity<>(responseDto, null, HttpStatus.OK);
     }
 
