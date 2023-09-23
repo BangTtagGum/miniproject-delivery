@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +23,7 @@ public class RefreshTokenService {
      * refresh 토큰 저장 및 ID 반환 메소드
      *
      * @param userName 발급할 userName
+     * @param role 발급할 userRole
      * @return refreshtoken key 값
      */
     public String createRefreshToken(String userName, UserRoleEnum role) {
