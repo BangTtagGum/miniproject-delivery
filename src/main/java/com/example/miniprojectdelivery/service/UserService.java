@@ -6,7 +6,6 @@ import com.example.miniprojectdelivery.dto.user.SignupRequestDto;
 import com.example.miniprojectdelivery.enums.UserRoleEnum;
 import com.example.miniprojectdelivery.model.*;
 import com.example.miniprojectdelivery.model.Address;
-import com.example.miniprojectdelivery.repository.CustomerRepository;
 import com.example.miniprojectdelivery.repository.RedisRepository;
 import com.example.miniprojectdelivery.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +31,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RedisRepository redisRepository;
-    private final CustomerRepository customerRepository;
     // ADMIN_TOKEN
-    private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
     private final String MAIL_PREFIX = "mail:";
 
     public ResponseEntity<MessageResponseDto> signup(SignupRequestDto requestDto) {
