@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +29,13 @@ public class RestaurantController {
 
     private final RestaurantService restaurantService;
 
-    // 업장 생성
+    /**
+     * 음식점 생성 메소드 - 사장님당 1개씩만 생성 가능
+     * @param userDetails 음식점 생성하려는 사장님 정보
+     * @param restaurantRequestDto 생성하려는 음식점 정보
+     * @return
+     */
+    @Secured("ROLE_OWNER")
     @PostMapping
     public RestaurantResponseDto restaurantCreate(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
@@ -38,7 +45,12 @@ public class RestaurantController {
         return restaurantService.restaurantCreate(userDetails.getUser(),restaurantRequestDto);
     }
 
-    // 업장 수정
+    /**
+     * 음식점 정보 수정 메소드
+     * @param restaurantId 수정할 음식점 메소드
+     * @param restaurantRequestDto 수정할 음식점 정보
+     */
+    @Secured("ROLE_OWNER")
     @PutMapping("/{restaurantId}")
     public RestaurantResponseDto restaurantUpdate(
             @PathVariable Long restaurantId,
@@ -47,7 +59,11 @@ public class RestaurantController {
         return restaurantService.restaurantUpdate(restaurantId, restaurantRequestDto);
     }
 
-    // 업장 삭제
+    /**
+     * 음식점 삭제 메소드
+     * @param restaurantId 삭제할 음식점 id
+     */
+    @Secured("ROLE_OWNER")
     @DeleteMapping("/{restaurantId}")
     public ResponseEntity<MessageResponseDto> restaurantDelete(
             @PathVariable Long restaurantId
