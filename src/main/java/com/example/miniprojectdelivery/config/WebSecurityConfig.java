@@ -67,9 +67,6 @@ public class WebSecurityConfig implements WebMvcConfigurer {
 
         http.authorizeHttpRequests((authorizeHttpRequests) ->
                 authorizeHttpRequests
-                        // test용
-                        .requestMatchers("/test/**").permitAll()  // html 모두 허용
-
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/scss/**").permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/api/users/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가

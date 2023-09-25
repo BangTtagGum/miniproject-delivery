@@ -13,11 +13,8 @@ public class TestController {
     public String search() {
         return "search";
     }
-
-    @GetMapping("/store")
-    public String store() {
-        return "store";
-    }
+   // @GetMapping("/store")
+   // public String store() {        return "store";    }
     @GetMapping("/customer")
     public String team() {
         return "customer";
@@ -26,6 +23,4 @@ public class TestController {
     public String service() {
         return "owner";
     }
-
-
 }

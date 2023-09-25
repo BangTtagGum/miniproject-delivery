@@ -83,7 +83,8 @@ public class OrderService {
         String owenrname = user.getUsername();
         //주문 생성
         Order order = Order.createOrder(user, delivery, orderMenu);
-        notificationService.send(owenrname, "주문이 들어왔습니다.", "chat");
+        System.out.println(orderMenu.getMenu().getRestaurant().getUser().getUsername());
+        notificationService.send(orderMenu.getMenu().getRestaurant().getUser().getUsername(), "주문이 들어왔습니다.", "chat");
 
         orderRepository.save(order);
         return new OrderResponseDto(order);
@@ -108,6 +109,7 @@ public class OrderService {
         }
 
         notificationService.send(order.getUser().getUsername(), "배달 완료했습니다.", "chat");
+
         order.delivery();
     }
 }
