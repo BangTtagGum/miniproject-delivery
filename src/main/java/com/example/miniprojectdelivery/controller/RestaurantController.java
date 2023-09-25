@@ -6,21 +6,19 @@ import com.example.miniprojectdelivery.dto.restaurant.RestaurantResponseDto;
 import com.example.miniprojectdelivery.service.RestaurantService;
 import com.example.miniprojectdelivery.utill.security.UserDetailsImpl;
 import jakarta.validation.Valid;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,6 +33,8 @@ public class RestaurantController {
      * @param restaurantRequestDto 생성하려는 음식점 정보
      * @return
      */
+
+    @ResponseBody
     @Secured("ROLE_OWNER")
     @PostMapping
     public RestaurantResponseDto restaurantCreate(
@@ -68,23 +68,35 @@ public class RestaurantController {
     public ResponseEntity<MessageResponseDto> restaurantDelete(
             @PathVariable Long restaurantId
     ) {
+        Map<String, Long> object = new HashMap<>();
         return restaurantService.restaurantDelete(restaurantId);
     }
 
     // 업장 상세 조회
     @GetMapping("/{restaurantId}")
-    public RestaurantResponseDto getRestaurant(
-            @PathVariable Long restaurantId
+    public String getRestaurant(
+            @PathVariable Long restaurantId,
+            Model model
     ) {
-        return restaurantService.getRestaurant(restaurantId);
+        model.addAttribute("Menus", restaurantService.getRestaurant(restaurantId));
+        return "store";
     }
 
+//    @GetMapping("/detail/{id}")
+//    public String detailRestaurant(Model model, @PathVariable Long id){
+//        model.addAttribute("restid", id);
+//        return "store";
+//    }
+
     // 키워드로 업장 검색
+    @ResponseBody
     @GetMapping("/search")
-    public ResponseEntity<List<RestaurantResponseDto>> searchRestaurant(
-            @RequestParam(value = "keyword") String keyword
+    //public ResponseEntity<List<RestaurantResponseDto>> searchRestaurant(
+    public List<RestaurantResponseDto> searchRestaurant(
+    @RequestParam(value = "query") String query
     ) {
-        return ResponseEntity.ok().body(restaurantService.searchRestaurant(keyword));
+        return restaurantService.searchRestaurant(query);
+        //return ResponseEntity.ok().body(restaurantService.searchRestaurant(query));
     }
 
 }
