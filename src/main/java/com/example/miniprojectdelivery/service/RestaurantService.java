@@ -6,7 +6,14 @@ import com.example.miniprojectdelivery.dto.restaurant.RestaurantResponseDto;
 import com.example.miniprojectdelivery.model.Restaurant;
 import com.example.miniprojectdelivery.model.User;
 import com.example.miniprojectdelivery.repository.RestaurantRepository;
+
+import java.util.ArrayList;
 import java.util.Optional;
+
+import com.example.miniprojectdelivery.utill.security.UserDetailsImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,5 +80,29 @@ RestaurantService {
     // 랭킹 Top 4 조회
     public List<Restaurant> updateRanking() {
         return restaurantRepository.findTop4ByOrderByTotalSalesDesc();
+    }
+
+    // 오너 토큰으로 업장 조회
+    public RestaurantResponseDto OwnerSearchRestaurant(User user) {
+        Restaurant restaurant = findRestaurant(user.getRestaurant().getId());
+        return new RestaurantResponseDto(restaurant);
+    }
+
+    public List<RestaurantRankDto> getRestaurantRank() {
+        List<RestaurantRankDto> restaurantRank = new ArrayList<>();
+        for (int i = 1; i <= 4; i++) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String stringRank = redisRepository.getValue("restaurant:rank" + i);
+            if (stringRank != null) {
+                try {
+                    RestaurantRankDto rankDto = objectMapper.readValue(stringRank, RestaurantRankDto.class);
+                    restaurantRank.add(rankDto);
+                } catch (JsonProcessingException e) {
+
+                    throw new RuntimeException("음식점 랭킹을 불러오는데 실패하였습니다.");
+                }
+            }
+        }
+        return restaurantRank;
     }
 }
