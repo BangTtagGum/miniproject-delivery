@@ -58,18 +58,18 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0 pe-4">
                     <a onclick="location.href='/'" class="nav-item nav-link active">Home</a>
-                    <a onclick="location.href='/test/search'" class="nav-item nav-link">Search</a>
-                    <a onclick="location.href='/test/store'" class="nav-item nav-link">Store</a>
+                    <a onclick="location.href='/view/search'" class="nav-item nav-link">Search</a>
+
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">MyPages</a>
                         <div class="dropdown-menu m-0">
-                            <a onclick="location.href='/test/customer'" class="dropdown-item">Customer</a>
-                            <a onclick="location.href='/test/owner'" class="dropdown-item">Owner</a>
+                            <a onclick="location.href='/view/myorderlists'" class="dropdown-item">Customer</a>
+                            <a onclick="location.href='/view/mypages'" class="dropdown-item">Owner</a>
                         </div>
                     </div>
                     <a onclick="location.href='/api/users/login-page'" class="nav-item nav-link">Login</a>
                 </div>
-                <a onclick="location.href='/test/search'" class="btn btn-primary py-2 px-4">Order</a>
+                <a onclick="location.href='/view/search'" class="btn btn-primary py-2 px-4">Order</a>
             </div>
         </nav>
         <div class="container-xxl py-5 bg-dark hero-header mb-5">
@@ -149,63 +149,6 @@
     </div>
     <!-- Menu End -->
 
-    <!-- Testimonial Start -->
-    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="text-center">
-                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Review</h5>
-                <h1 class="mb-5">Our Clients Say!!!</h1>
-            </div>
-            <div class="owl-carousel testimonial-carousel">
-                <div class="testimonial-item bg-transparent border rounded p-4">
-                    <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                    <p>Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore
-                        diam</p>
-                    <div class="d-flex align-items-center">
-                        <div class="ps-3">
-                            <h5 class="mb-1">Client Name</h5>
-                            <small>Profession</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-item bg-transparent border rounded p-4">
-                    <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                    <p>Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore
-                        diam</p>
-                    <div class="d-flex align-items-center">
-                        <div class="ps-3">
-                            <h5 class="mb-1">Client Name</h5>
-                            <small>Profession</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-item bg-transparent border rounded p-4">
-                    <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                    <p>Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore
-                        diam</p>
-                    <div class="d-flex align-items-center">
-                        <div class="ps-3">
-                            <h5 class="mb-1">Client Name</h5>
-                            <small>Profession</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-item bg-transparent border rounded p-4">
-                    <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                    <p>Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore
-                        diam</p>
-                    <div class="d-flex align-items-center">
-                        <div class="ps-3">
-                            <h5 class="mb-1">Client Name</h5>
-                            <small>Profession</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Testimonial End -->
-
 
     <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
         <div class="row g-0">
@@ -221,8 +164,8 @@
                                         <option value="1">⭐</option>
                                         <option value="2">⭐⭐</option>
                                         <option value="3">⭐⭐⭐</option>
-                                        <option value="3">⭐⭐⭐⭐</option>
-                                        <option value="3">⭐⭐⭐⭐⭐</option>
+                                        <option value="4">⭐⭐⭐⭐</option>
+                                        <option value="5">⭐⭐⭐⭐⭐</option>
                                     </select>
                                     <label for="select1">Star</label>
                                 </div>
@@ -244,6 +187,19 @@
         </div>
     </div>
 
+    <!-- Review Start -->
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="text-center">
+                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Review</h5>
+                <h1 class="mb-5">Our Clients Say!!!</h1>
+            </div>
+            <div class="owl-carousel testimonial-carousel">
+                <!-- 여기에 testimonial-item이 들어갑니다. -->
+            </div>
+        </div>
+    </div>
+    <!-- Review End -->
 
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="copyright">
@@ -257,13 +213,6 @@
                     &copy; <a class="border-bottom" href="https://github.com/LeeJiHun1">이지훈 </a>
                     &copy; <a class="border-bottom" href="https://github.com/JeongJaeIk1207">정재익</a>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <div class="footer-menu">
-                        <a onclick="location.href='/'">Home</a>
-                        <a onclick="location.href='/test/search'">Order</a>
-                        <a onclick="location.href='/test/review'">Review</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -271,7 +220,7 @@
 </div>
 <!-- Back to Top -->
 <div>
-<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
 
 <!-- JavaScript Libraries -->
@@ -305,9 +254,13 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script th:inline="javascript">
 
+    var info;
+
     $(document).ready(function () {
         $('#menu-results').empty()
-        let MenuList = [[${Menus}]].menuList;
+
+        info = [[${Menus}]];
+        let MenuList = info.menuList;
         for (let i = 0; i < MenuList.length; i++) {
             let itemDto = MenuList[i];
             let tempHtml = addHTML(itemDto);
@@ -368,5 +321,62 @@
             }
         })
     }
+
+
+    <!--리뷰 생성-->
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        const content = $('#message').val();
+        const star = $('#select1').val();
+
+        $.ajax({
+            type: "POST",
+            url: "/api/reviews",
+            contentType: "application/json",
+            data: JSON.stringify({
+                restaurantId: info.id,
+                content: content,
+                star: star
+            }),
+            success: function () {
+                alert("리뷰가 성공적으로 등록되었습니다.");
+                location.reload();
+            },
+            error: function (error) {
+                alert("리뷰 등록에 실패했습니다: " + error.responseText);
+            }
+        });
+    });
+
+
+    // 리뷰 GET
+    $(document).ready(function () {
+        if (info && Array.isArray(info.reviewList)) {
+            let reviews = info.reviewList;
+            let $carousel = $('.testimonial-carousel');
+            reviews.forEach(review => {
+                let stars = '';
+                for(let i = 0; i < review.star; i++){
+                    stars += '⭐';
+                }
+
+                let tempHtml = `
+                              <div class="testimonial-item bg-transparent border rounded p-4">
+                                <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                                <p>${review.content}</p>
+                                <div class="d-flex align-items-center">
+                                    <div class="ps-3">
+                                        <h5 class="mb-1">${review.userName}</h5>
+                                        <small>${stars}</small>
+                                    </div>
+                                </div>
+                            </div>`;
+                $carousel.append(tempHtml);
+            });
+        } else {
+            console.error('info 객체 또는 reviewList 배열이 유효하지 않습니다.');
+        }
+    });
+
 </script>
 </html>

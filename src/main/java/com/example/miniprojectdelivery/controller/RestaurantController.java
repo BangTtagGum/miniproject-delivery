@@ -3,35 +3,33 @@ package com.example.miniprojectdelivery.controller;
 import com.example.miniprojectdelivery.dto.MessageResponseDto;
 import com.example.miniprojectdelivery.dto.restaurant.RestaurantRequestDto;
 import com.example.miniprojectdelivery.dto.restaurant.RestaurantResponseDto;
+import com.example.miniprojectdelivery.service.OrderService;
 import com.example.miniprojectdelivery.service.RestaurantService;
 import com.example.miniprojectdelivery.utill.security.UserDetailsImpl;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/restaurants")
 public class RestaurantController {
 
-    private final RestaurantService restaurantService;
 
+    private final RestaurantService restaurantService;
+    private final OrderService orderService;
     /**
      * 음식점 생성 메소드 - 사장님당 1개씩만 생성 가능
      * @param userDetails 음식점 생성하려는 사장님 정보
      * @param restaurantRequestDto 생성하려는 음식점 정보
-     * @return
      */
 
     @ResponseBody
@@ -72,31 +70,22 @@ public class RestaurantController {
         return restaurantService.restaurantDelete(restaurantId);
     }
 
-    // 업장 상세 조회
-    @GetMapping("/{restaurantId}")
-    public String getRestaurant(
-            @PathVariable Long restaurantId,
-            Model model
+    // 오너 토큰으로 업장 조회
+    @GetMapping
+    public RestaurantResponseDto OwnerSearchRestaurant(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        model.addAttribute("Menus", restaurantService.getRestaurant(restaurantId));
-        return "store";
-    }
+        return restaurantService.OwnerSearchRestaurant(userDetails.getUser());
 
-//    @GetMapping("/detail/{id}")
-//    public String detailRestaurant(Model model, @PathVariable Long id){
-//        model.addAttribute("restid", id);
-//        return "store";
-//    }
+    }
 
     // 키워드로 업장 검색
     @ResponseBody
     @GetMapping("/search")
-    //public ResponseEntity<List<RestaurantResponseDto>> searchRestaurant(
     public List<RestaurantResponseDto> searchRestaurant(
     @RequestParam(value = "query") String query
     ) {
         return restaurantService.searchRestaurant(query);
-        //return ResponseEntity.ok().body(restaurantService.searchRestaurant(query));
     }
 
 }
