@@ -1,7 +1,9 @@
 package com.example.miniprojectdelivery.service;
 
 import com.example.miniprojectdelivery.dto.order.OrderCreateRequestDto;
+import com.example.miniprojectdelivery.dto.order.OrderCustomerViewDto;
 import com.example.miniprojectdelivery.dto.order.OrderResponseDto;
+import com.example.miniprojectdelivery.dto.order.OrderViewDto;
 import com.example.miniprojectdelivery.model.*;
 import com.example.miniprojectdelivery.repository.MenuRepository;
 import com.example.miniprojectdelivery.repository.OrderRepository;
@@ -60,6 +62,13 @@ public class OrderService {
                 .map(OrderResponseDto::new).toList();
     }
 
+    @Transactional
+    public List<OrderViewDto> getRestaurantOrdersForView(User user) {
+        Long restaurantId = user.getRestaurant().getId();
+
+        return orderRepository.findOrdersByRestaurantId(restaurantId).stream()
+                .map(OrderViewDto::new).toList();
+    }
 
     /**
      * 주문 생성
