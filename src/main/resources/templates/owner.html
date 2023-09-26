@@ -60,18 +60,18 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0 pe-4">
                     <a onclick="location.href='/'" class="nav-item nav-link active">Home</a>
-                    <a onclick="location.href='/test/search'" class="nav-item nav-link">Search</a>
+                    <a onclick="location.href='/view/search'" class="nav-item nav-link">Search</a>
 
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">MyPages</a>
                         <div class="dropdown-menu m-0">
-                            <a onclick="location.href='/test/customer'" class="dropdown-item">Customer</a>
-                            <a onclick="location.href='/test/owner'" class="dropdown-item">Owner</a>
+                            <a onclick="location.href='/view/myorderlists'" class="dropdown-item">Customer</a>
+                            <a onclick="location.href='/view/mypages'" class="dropdown-item">Owner</a>
                         </div>
                     </div>
                     <a onclick="location.href='/api/users/login-page'" class="nav-item nav-link">Login</a>
                 </div>
-                <a onclick="location.href='/test/search'" class="btn btn-primary py-2 px-4">Order</a>
+                <a onclick="location.href='/view/search'" class="btn btn-primary py-2 px-4">Order</a>
             </div>
         </nav>
 
@@ -195,13 +195,6 @@
                     &copy; <a class="border-bottom" href="https://github.com/LeeJiHun1">이지훈</a>
                     &copy; <a class="border-bottom" href="https://github.com/JeongJaeIk1207">정재익</a>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <div class="footer-menu">
-                        <a onclick="location.href='/'">Home</a>
-                        <a onclick="location.href='/test/search'">Order</a>
-                        <a onclick="location.href='/test/review'">Review</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -318,53 +311,6 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!--    <script>-->
-<!--        // 레스토랑이 존재하고 정보를 표시하는 함수-->
-
-<!--        //레스토랑 있으면 보여주고, 없으면 생성-->
-<!--        $(document).ready(function () {-->
-<!--            function checkOrderMenuList() {-->
-<!--                $.get('/api/orders/restaurants', function (data) {-->
-<!--                    console.log(data);-->
-<!--                    // Check if the restaurant data exists-->
-<!--                    if (data && Object.keys(data).length > 0) {-->
-<!--                        // Restaurant exists, display its information-->
-<!--                        $('#restaurantInfo').html(-->
-<!--                            '<h3>Menu Name: ' + data.name + '</h3>' + '<h3>Menu Cost: ' + data.cost + '</h3>' + '<h3>Menu Count: ' + data.count + '</h3>'-->
-<!--                        );-->
-<!--                    } else {-->
-<!--                        // Restaurant does not exist, display a message-->
-<!--                        $('#restaurantInfo').html(-->
-<!--                            '<h1>들어온 주문이 없습니다.</h1>'-->
-<!--                        );-->
-<!--                    }-->
-<!--                });-->
-<!--            }-->
-<!--            checkOrderMenuList();-->
-<!--        });-->
-<!--    </script>-->
-
-
-    <!-- 기존 JavaScript 코드 이후에 다음 스크립트를 추가합니다 -->
-
-
-    <!--            // 레스토랑이 존재하고 생성되지 않았으면 생성합니다.-->
-    <!--            $('#createRestaurantForm').submit(function (event) {-->
-    <!--                event.preventDefault();-->
-    <!--                var formData = $(this).serialize();-->
-
-    <!--                $.post('/api/restaurant', formData, function (data) {-->
-    <!--                    alert('Restaurant created successfully');-->
-    <!--                    // Clear the form and hide it-->
-    <!--                    $('#createRestaurantForm')[0].reset();-->
-    <!--                    $('#createRestaurantForm').hide();-->
-    <!--                    // Display the restaurant information-->
-    <!--                    $('#restaurantInfo').html('<h2>Restaurant Name: ' + data.name + '</h2>' + '<h2>Restaurant Address: ' + data.address + '</h2>');-->
-    <!--                });-->
-    <!--            });-->
-
-    <!--        </script>-->
-
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
