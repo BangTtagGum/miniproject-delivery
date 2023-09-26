@@ -1,10 +1,12 @@
 package com.example.miniprojectdelivery.service;
 
 import com.example.miniprojectdelivery.dto.MessageResponseDto;
+import com.example.miniprojectdelivery.dto.restaurant.RestaurantRankDto;
 import com.example.miniprojectdelivery.dto.restaurant.RestaurantRequestDto;
 import com.example.miniprojectdelivery.dto.restaurant.RestaurantResponseDto;
 import com.example.miniprojectdelivery.model.Restaurant;
 import com.example.miniprojectdelivery.model.User;
+import com.example.miniprojectdelivery.repository.RedisRepository;
 import com.example.miniprojectdelivery.repository.RestaurantRepository;
 
 import java.util.ArrayList;
@@ -21,14 +23,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class
-RestaurantService {
+@RequiredArgsConstructor
+public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
+    private final RedisRepository redisRepository;
 
-    public RestaurantService(RestaurantRepository restaurantRepository) {
-        this.restaurantRepository = restaurantRepository;
-    }
 
     // 업장 생성
     public RestaurantResponseDto restaurantCreate(User user, RestaurantRequestDto restaurantRequestDto ) {
