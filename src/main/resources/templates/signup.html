@@ -36,7 +36,7 @@
     <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
-<!--<iframe src=“login.html" id="iframe"></iframe>-->
+<!--<iframe src="login.html" id="iframe"></iframe>-->
 <!-- Navbar & Hero Start -->
 <div class="container-xxl position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
@@ -116,12 +116,11 @@
             <div class="login-id-label">Street</div>
             <input type="text" name="street" required placeholder="street" class="login-input-box">
             <div>
-                <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;">사업자
-                <input id="admin-token" type="password" name="adminToken" placeholder="사업자 암호" class="login-input-box"
-                       style="display:none">
+                <input id="admin-check" type="checkbox" name="owner" style="margin-top: 40px;">사업자
             </div>
-            <!--                <input type="button" value="Signup" onclick="submitSignup()">-->
             <button id="login-id-submit" onclick="submitSignup()" class="login-input-box">회원 가입</button>
+
+
         </form>
     </div>
 
@@ -165,6 +164,7 @@
         }
 
         function submitSignup() {
+            var isAdmin = document.getElementById("admin-check").checked;
             var formData = {
                 username: $('[name="username"]').val(),
                 password: $('[name="password"]').val(),
@@ -173,8 +173,7 @@
                 street: $('[name="street"]').val(),
                 email: $('[name="email"]').val(),
                 checkemail: $('[name="checkemail"]').val(),
-                admin: document.getElementById("admin-check").checked,
-                adminToken: $('[name="adminToken"]').val()
+                owner: isAdmin
             };
 
             $.ajax({
@@ -186,7 +185,6 @@
                     document.getElementById('login2').click();
                 },
                 error: function (err) {
-
                     var msg = err.responseText;
                     alert(JSON.parse(msg)["msg"]);
                 }
