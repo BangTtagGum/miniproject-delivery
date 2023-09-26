@@ -20,7 +20,6 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping
 public class PageHandler {
 
     private final OrderService orderService;
@@ -35,7 +34,7 @@ public class PageHandler {
 
     // 사용자가 자신의 주문현황 확인하는 api
     @Secured("ROLE_CUSTOMER")
-    @GetMapping("/myorderlists")
+    @GetMapping("/view/myorderlists")
     public String getMyOrders(@AuthenticationPrincipal UserDetailsImpl userDetails
             , Model model) {
         User user = userDetails.getUser();
@@ -46,7 +45,7 @@ public class PageHandler {
 
 
     @Secured("ROLE_OWNER")
-    @GetMapping("/mypages")
+    @GetMapping("/view/mypages")
     public String getMyRestaurant(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             Model model
@@ -65,13 +64,19 @@ public class PageHandler {
     }
 
 
-
-    @GetMapping("/restaurants/{restaurantId}")
+    // 레스토랑 상세 페이지
+    @GetMapping("/view/restaurants/{restaurantId}")
     public String getRestaurant(
             @PathVariable Long restaurantId,
             Model model
     ) {
         model.addAttribute("Menus", restaurantService.getRestaurant(restaurantId));
         return "store";
+    }
+
+    //주문 페이지
+    @GetMapping("/view/search")
+    public String search() {
+        return "search";
     }
 }

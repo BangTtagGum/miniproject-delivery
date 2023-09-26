@@ -24,7 +24,7 @@ public class Scheduler {
     private final RedisRepository redisRepository;
 
     // 초, 분, 시, 일, 주, 월 순서
-    @Scheduled(cron = "0 0 1 * * *") // 매일 새벽 1시
+    @Scheduled(cron = "*/10 * * * * *") // 매일 새벽 1시
     public void updateRank() {
         log.info("랭킹 업데이트 실행");
         List<Restaurant> restaurantRanking = restaurantService.updateRanking();
@@ -34,7 +34,6 @@ public class Scheduler {
         for (Restaurant restaurant : restaurantRanking) {
             if (!restaurant.getMenuList().isEmpty()) {
                 String restaurantName = restaurant.getName();
-                log.info(restaurantName);
                 ObjectMapper objectMapper = new ObjectMapper();
                 try {
                     RestaurantRankDto response = new RestaurantRankDto(restaurant);
