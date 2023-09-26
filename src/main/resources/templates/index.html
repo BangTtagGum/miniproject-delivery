@@ -64,8 +64,8 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">MyPages</a>
                         <div class="dropdown-menu m-0">
-                            <a onclick="location.href='/test/customer'" class="dropdown-item">Customer</a>
-                            <a onclick="location.href='/test/owner'" class="dropdown-item">Owner</a>
+                            <a onclick="location.href='/myorderlists'" class="dropdown-item">Customer</a>
+                            <a onclick="location.href='/mypages'" class="dropdown-item">Owner</a>
                         </div>
                     </div>
                     <a onclick="location.href='/api/users/login-page'" class="nav-item nav-link">Login</a>
@@ -166,73 +166,21 @@
         </div>
 
         <div class="row g-4">
-            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+            <div th:each="rank : ${ranks}" class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="team-item text-center rounded overflow-hidden">
                     <div class="rounded-circle overflow-hidden m-4">
-                        <img class="img-fluid" src="/img/team-1.jpg" alt="">
-
+                        <img class="img-fluid" th:src="${rank.image}" alt="">
                     </div>
-                    <h5 class="mb-0">Test1</h5>
-                    <small>이사람 가게로 바로연결 원함(store.html)</small>
+                    <h5 class="mb-0" th:text="${rank.name}"></h5>
                     <div class="d-flex justify-content-center mt-3">
-                        <a class="btn btn-square btn-primary mx-1" onclick="location.href='/test/store'"><i
-                                class="fa fa-utensils"
-                                style="font-size: 20px"></i></a>
-
+                        <a class="btn btn-square btn-primary mx-1" th:href="'/restaurants/' + ${rank.id}">
+                            <i class="fa fa-utensils" style="font-size: 20px"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="team-item text-center rounded overflow-hidden">
-                    <div class="rounded-circle overflow-hidden m-4">
-                        <img class="img-fluid" src="/img/team-1.jpg" alt="">
-
-                    </div>
-                    <h5 class="mb-0">Test1</h5>
-                    <small>이사람 가게로 바로연결 원함(store.html)</small>>
-                    <div class="d-flex justify-content-center mt-3">
-                        <a class="btn btn-square btn-primary mx-1" onclick="location.href='/test/store'"><i
-                                class="fa fa-utensils"
-                                style="font-size: 20px"></i></a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="team-item text-center rounded overflow-hidden">
-                    <div class="rounded-circle overflow-hidden m-4">
-                        <img class="img-fluid" src="/img/team-1.jpg" alt="">
-
-                    </div>
-                    <h5 class="mb-0">Test1</h5>
-                    <small>이사람 가게로 바로연결 원함(store.html)</small>
-                    <div class="d-flex justify-content-center mt-3">
-                        <a class="btn btn-square btn-primary mx-1" onclick="location.href='/test/store'"><i
-                                class="fa fa-utensils"
-                                style="font-size: 20px"></i></a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                <div class="team-item text-center rounded overflow-hidden">
-                    <div class="rounded-circle overflow-hidden m-4">
-                        <img class="img-fluid" src="/img/team-2.jpg" alt="">
-
-                    </div>
-                    <h5 class="mb-0">Test1</h5>
-                    <small>이사람 가게로 바로연결 원함(store.html)</small>
-                    <div class="d-flex justify-content-center mt-3">
-                        <a class="btn btn-square btn-primary mx-1" onclick="location.href='/test/store'"><i
-                                class="fa fa-utensils"
-                                style="font-size: 20px"></i></a>
-
-                    </div>
-                </div>
-            </div>
-
-
         </div>
+
 
 
     </div>
