@@ -64,13 +64,6 @@ public class PageHandler {
         return "owner";
     }
 
-    // TODO: 2023-09-25  ㄱ고객이 주문할 수 있느 ㄴ음식점 페이지
-    /**
-     *
-     *
-     * return store.html
-     */
-
 
 
     @GetMapping("/restaurants/{restaurantId}")
