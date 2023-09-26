@@ -79,6 +79,14 @@ public class RestaurantController {
         return restaurantService.getRestaurant(restaurantId);
     }
 
+    // 오너 토큰으로 업장 조회
+    @GetMapping
+    public RestaurantResponseDto OwnerSearchRestaurant(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        return restaurantService.OwnerSearchRestaurant(userDetails.getUser());
+    }
+
     // 키워드로 업장 검색
     @GetMapping("/search")
     public ResponseEntity<List<RestaurantResponseDto>> searchRestaurant(
