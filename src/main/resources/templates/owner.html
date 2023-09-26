@@ -152,13 +152,14 @@
         <table class="table">
             <thead>
             <tr>
-                <th>이미지</th>
+                <th>주문 ID</th>
                 <th>메뉴명</th>
                 <th>가격</th>
                 <th>수량</th>
                 <th>주문자</th>
                 <th>주소</th>
                 <th>상태 변경</th>
+                <th>상태 </th>
             </tr>
             </thead>
             <tbody>
@@ -170,11 +171,13 @@
                 <td th:text="${order.count}"></td>
                 <td th:text="${order.customerName}"></td>
                 <td th:text="${order.address}"></td>
-                <td><input type="checkbox" th:value="${order.id}" class="order-checkbox"/></td>
+                <td>
+                    <button disabled th:if="${order.state == 'COMPLETE'}" class="btn btn-danger">배송 완료</button>
+                    <button id="deliveryButton" class="btn btn-success" th:if="${order.state == 'READY'}" th:data-orderid="${order.id}"   >주문 배송</button>
+                </td>
             </tr>
             </tbody>
         </table>
-        <button id="completeDeliveryBtn" class="btn btn-success">배달 완료</button>
     </div>
 
 
@@ -367,6 +370,7 @@
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
 </div>
+</div>
 
 
 <!-- JavaScript Libraries -->
@@ -387,6 +391,7 @@
 
 <!-- Template Javascript -->
 <script src="/js/main.js"></script>
+
 </body>
 
 
