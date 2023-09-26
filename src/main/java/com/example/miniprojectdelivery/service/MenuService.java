@@ -43,8 +43,8 @@ public class MenuService {
     }
 
 
-    public List<MenuResponseDto> getMenus() {
-        List<Menu> menuList = menuRepository.findAll();
+    public List<MenuResponseDto> getMenus(User user) {
+        List<Menu> menuList = menuRepository.findAllByRestaurantId(user.getRestaurant().getId());
         return menuList.stream().map(MenuResponseDto::new).toList();
     }
 
