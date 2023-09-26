@@ -1,21 +1,22 @@
 package com.example.miniprojectdelivery.controller;
 
 import com.example.miniprojectdelivery.dto.MessageResponseDto;
-import com.example.miniprojectdelivery.dto.order.OrderViewDto;
 import com.example.miniprojectdelivery.dto.restaurant.RestaurantRequestDto;
 import com.example.miniprojectdelivery.dto.restaurant.RestaurantResponseDto;
 import com.example.miniprojectdelivery.service.OrderService;
 import com.example.miniprojectdelivery.service.RestaurantService;
 import com.example.miniprojectdelivery.utill.security.UserDetailsImpl;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +31,8 @@ public class RestaurantController {
      * @param userDetails 음식점 생성하려는 사장님 정보
      * @param restaurantRequestDto 생성하려는 음식점 정보
      */
+
+    @ResponseBody
     @Secured("ROLE_OWNER")
     @PostMapping
     public RestaurantResponseDto restaurantCreate(
@@ -63,11 +66,9 @@ public class RestaurantController {
     public ResponseEntity<MessageResponseDto> restaurantDelete(
             @PathVariable Long restaurantId
     ) {
+        Map<String, Long> object = new HashMap<>();
         return restaurantService.restaurantDelete(restaurantId);
     }
-
-    // 업장 상세 조회
-
 
     // 오너 토큰으로 업장 조회
     @GetMapping
@@ -75,14 +76,16 @@ public class RestaurantController {
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         return restaurantService.OwnerSearchRestaurant(userDetails.getUser());
+
     }
 
     // 키워드로 업장 검색
+    @ResponseBody
     @GetMapping("/search")
-    public ResponseEntity<List<RestaurantResponseDto>> searchRestaurant(
-            @RequestParam(value = "keyword") String keyword
+    public List<RestaurantResponseDto> searchRestaurant(
+    @RequestParam(value = "query") String query
     ) {
-        return ResponseEntity.ok().body(restaurantService.searchRestaurant(keyword));
+        return restaurantService.searchRestaurant(query);
     }
 
 }
