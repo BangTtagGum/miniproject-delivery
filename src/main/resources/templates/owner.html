@@ -117,8 +117,10 @@
         <h1>Menu Management</h1>
 
         <!-- Menu Add Form -->
-        <h2>Add Menu</h2>
-        <form id="menuForm" enctype="multipart/form-data">
+        <div class="container">
+            <h2>Add Menu</h2>
+
+            <form id="menuForm" enctype="multipart/form-data" method="post" action="/api/menus">
             <div class="form-group">
                 <label for="image">Menu Image:</label>
                 <input type="file" class="form-control-file" id="image" name="image" accept="image/*" required>
@@ -131,8 +133,9 @@
                 <label for="cost">Menu Cost:</label>
                 <input type="number" class="form-control" id="cost" name="cost" placeholder="Menu Cost" required>
             </div>
-            <button type="submit" class="btn btn-primary">Add Menu</button>
+                <button type="submit">Add Menu</button>
         </form>
+
     </div>
 
     <div class="menuList">
@@ -380,6 +383,7 @@
 <script src="/lib/tempusdominus/js/moment.min.js"></script>
 <script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
 <script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Template Javascript -->
 <script src="/js/main.js"></script>
