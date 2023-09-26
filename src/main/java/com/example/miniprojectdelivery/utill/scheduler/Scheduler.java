@@ -1,5 +1,7 @@
 package com.example.miniprojectdelivery.utill.scheduler;
 
+import com.example.miniprojectdelivery.dto.restaurant.RestaurantRankDto;
+import com.example.miniprojectdelivery.dto.restaurant.RestaurantResponseDto;
 import com.example.miniprojectdelivery.model.Restaurant;
 import com.example.miniprojectdelivery.repository.RedisRepository;
 import com.example.miniprojectdelivery.repository.RestaurantRepository;
@@ -27,12 +29,24 @@ public class Scheduler {
         log.info("랭킹 업데이트 실행");
         List<Restaurant> restaurantRanking = restaurantService.updateRanking();
 
+
         int rank = 1;
         for (Restaurant restaurant : restaurantRanking) {
-            String restaurantName = restaurant.getName();
-            log.info(restaurantName);
-            redisRepository.save("restaurant:rank" + rank, restaurantName);
-            ++rank;
+            if (!restaurant.getMenuList().isEmpty()) {
+                String restaurantName = restaurant.getName();
+                log.info(restaurantName);
+                ObjectMapper objectMapper = new ObjectMapper();
+                try {
+                    RestaurantRankDto response = new RestaurantRankDto(restaurant);
+                    String restaurantRank = objectMapper.writeValueAsString(response);
+                    redisRepository.save("restaurant:rank" + rank, restaurantRank);
+                    ++rank;
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException("객체를 String으로 변환하지 못했습니다.");
+                }
+            }
+
+
         }
     }
 }
