@@ -25,7 +25,7 @@
     <!-- Libraries Stylesheet -->
     <link href="/lib/animate/animate.min.css" rel="stylesheet">
     <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet"/>
+    <link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.ㄱ" rel="stylesheet"/>
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -161,10 +161,10 @@
                 <h5 class="section-title ff-secondary text-center text-primary fw-normal">Search</h5>
                 <form id="search-form">
                     <label for="query"></label>
-                    <input type="text" id="query" placeholder="음식점 검색" class="form-control">
+                    <input type="text" id="query" placeholder="음식점 검색" class="form-control" style="margin-bottom: 10px">
                 </form>
             </div>
-            <button type="submit" onclick="execSearch()" class="btn btn-primary">검색</button>
+            <button type="submit" onclick="execSearch()" class="btn btn-primary" style="margin-bottom: 50px">검색</button>
 
             <div class="row g-4" id="search-results">
                 <!-- 검색 결과가 여기에 나열예정. -->
@@ -231,12 +231,14 @@
             url: `/api/restaurants/search?query=${query}`,
             success: function (response) {
                 $('#search-results').empty();
-                console.log(response)
-                // 4. for 문마다 itemDto를 꺼내서 HTML 만들고 검색결과 목록에 붙이기!
-                for (let i = 0; i < response.length; i++) {
-                    let itemDto = response[i];
-                    let tempHtml = addHTML(itemDto);
-                    $('#search-results').append(tempHtml);
+                for (let i = 0; i < response.length; i += 2) { // i를 2씩 증가시키기
+                    let rowHtml = '<div class="row">'; // 새로운 row 시작
+                    for (let j = 0; j < 2 && i + j < response.length; j++) { // 한 row에 최대 2개의 음식점 정보
+                        let itemDto = response[i + j];
+                        rowHtml += addHTML(itemDto);
+                    }
+                    rowHtml += '</div>'; // row 끝
+                    $('#search-results').append(rowHtml);
                 }
             },
             error: function (request, status, error) {
@@ -249,27 +251,20 @@
     }
 
     function addHTML(itemDto) {
-        console.log(itemDto)
-        console.log(itemDto.menuList)
-        let imagesrc = itemDto.menuList[0].image
-        if (imagesrc == null) {
-            imagesrc = "https://th.bing.com/th/id/OIP.sUZBk1ASqCmCqNybi958vgHaHP?w=168&h=180&c=7&r=0&o=5&pid=1.7"
-        }
-        /**
-         * class="search-itemDto" 인 녀석에서
-         * image, title, lprice, addProduct 활용하기
-         * 참고) onclick='addProduct(${JSON.stringify(itemDto)})'
-         */
+        let imagesrc = itemDto.menuList[0]?.image || "https://th.bing.com/th/id/OIP.sUZBk1ASqCmCqNybi958vgHaHP?w=168&h=180&c=7&r=0&o=5&pid=1.7";
+
         return `
-        <div class="search-itemDto" onclick="location.href='/restaurants/${itemDto.id}';">
+        <div class="col-md-6"> <!-- 여기서 6은 12 / 2로, 한 줄에 두 개의 음식점을 의미합니다. -->
+            <div class="search-itemDto" onclick="location.href='/view/restaurants/${itemDto.id}';">
                 <div class="search-itemDto-left">
                     <img src="${imagesrc}" alt="">
                 </div>
                 <div class="search-itemDto-center">
                     <div>${itemDto.name}</div>
+                </div>
             </div>
-        </div>`
-        }
+        </div>`;
+    }
 </script>
 
 </body>

@@ -44,7 +44,7 @@ public class MenuController {
         User user = userDetails.getUser();
 //        return menuService.createMenu(user,image, restaurantId, name, cost);
         menuService.createMenu(userDetails.getUser(),image, name, cost);
-        return "redirect:/test/owner";
+        return "redirect:/view/mypages";
     }
 
     @ResponseBody
