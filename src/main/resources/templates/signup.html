@@ -59,7 +59,7 @@
                         <a onclick="location.href='/view/mypages'" class="dropdown-item">Owner</a>
                     </div>
                 </div>
-                <a onclick="location.href='/api/users/login-page'" class="nav-item nav-link">Login</a>
+                <a onclick="location.href='/api/users/login-page'" class="nav-item nav-link" id="login2">Login</a>
             </div>
             <a onclick="location.href='/view/search'" class="btn btn-primary py-2 px-4">Order</a>
         </div>
@@ -118,8 +118,6 @@
                 <input id="admin-check" type="checkbox" name="owner" style="margin-top: 40px;">사업자
             </div>
             <button id="login-id-submit" onclick="submitSignup()" class="login-input-box">회원 가입</button>
-
-
         </form>
     </div>
 
@@ -130,16 +128,16 @@
 
         })
 
-        function onclickAdmin() {
-            var checkBox = document.getElementById("admin-check");
-            var box = document.getElementById("admin-token");
-
-            if (checkBox.checked) {
-                box.style.display = "block";
-            } else {
-                box.style.display = "none";
-            }
-        }
+        // function onclickAdmin() {
+        //     var checkBox = document.getElementById("admin-check");
+        //     var box = document.getElementById("admin-token");
+        //
+        //     if (checkBox.checked) {
+        //         box.style.display = "block";
+        //     } else {
+        //         box.style.display = "none";
+        //     }
+        // }
 
         function requestEmailCode() {
             var email = $('[name="email"]').val();

@@ -127,15 +127,26 @@ const getCookieValue = (key) => {
 
     return cookies[key] || null;
 };
-const authorization = getCookieValue('Authorization');
-if (authorization) {
-    const eventSource = new EventSource('http://localhost:8080/test/subscribe/'+authorization);
-    //1 대신 cookie의 헤더 정보를 가져와서 userid를 집어넣어준다.
-    eventSource.addEventListener('sse', event => {
-        let jobj = JSON.parse(event.data).content
-        if(jobj != null) alert(jobj)
-    });
-}
+
+$(document).ready(function(){
+    const authorization = getCookieValue('Authorization');
+    console.log(authorization)
+
+    if (authorization) {
+        let URL = host + '/test/subscribe/'+authorization;
+        console.log("------------------------------")
+        console.log(URL)
+
+        const eventSource = new EventSource(URL);
+
+        //const eventSource = new EventSource('http://localhost:8080/test/subscribe/'+authorization);
+        //1 대신 cookie의 헤더 정보를 가져와서 userid를 집어넣어준다.
+        eventSource.addEventListener('sse', event => {
+            let jobj = JSON.parse(event.data).content
+            if(jobj != null) alert(jobj)
+        });
+    }
+});
 
 function logout() {
     // 토큰 삭제

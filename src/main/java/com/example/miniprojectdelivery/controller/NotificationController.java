@@ -17,4 +17,9 @@ public class NotificationController {
     public SseEmitter subscribe(@PathVariable String token, @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId){
         return notificationService.subscribe(token, lastEventId);
     }
+
+    @GetMapping("/noti/{userId}")
+    public void sendNoti(@PathVariable String userId){
+        notificationService.send(userId, "알람입니다.","chat");
+    }
 }
